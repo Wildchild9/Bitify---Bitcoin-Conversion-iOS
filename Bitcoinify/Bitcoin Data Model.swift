@@ -710,17 +710,7 @@ func getSpecificBitcoinDataCompletion(url: String, requestedData: String, curren
     
 }
 
-extension Double {
-    func currencyFormat() -> String {
-        let num : Double = self
-        let numberFormatter = NumberFormatter()
-        let result : NSNumber = num as NSNumber
-        numberFormatter.numberStyle = NumberFormatter.Style.currency
-        let formattedResult = numberFormatter.string(from: result)
-        let finalResult : String = "\(formattedResult!.dropFirst())"
-        return finalResult
-    }
-}
+
 
 
 /*

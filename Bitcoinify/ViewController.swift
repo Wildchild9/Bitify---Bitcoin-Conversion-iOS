@@ -92,9 +92,18 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var centerLocation : CGFloat = 0
     var currentRow : Int = 0
     var currentDisplayRow : Int = 0
+    var smallWidth : CGFloat = 0//btcWidth - 50
+    var smallHeight : CGFloat = 0//btcHeight - (50 * (self.btcHeight / self.btcWidth))
+    var smallY : CGFloat = 0//currencyLocationY - 30
+    var smallX : CGFloat = 0//currencyLocationX + 25
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        smallWidth = btcWidth - 50
+        smallHeight = btcHeight - (50 * (self.btcHeight / self.btcWidth))
+        smallY = currencyLocationY - 30
+        smallX = currencyLocationX + 25
         bitcoinHeight = bitcoin.frame.size.height
         bitcoinWidth = bitcoin.frame.size.width
         bitcoinX = bitcoin.frame.origin.x
@@ -425,56 +434,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     
-    
-    //MARK: - Networking
-    /***************************************************************/
-    
-    func getBitcoinData(url: String) {
-        
-        Alamofire.request(url, method: .get)
-            
-            .responseJSON { response in
-                if response.result.isSuccess {
-                    print(response)
-                    print("Sucess! Completed the currency conversion")
-                    let bitcoinJSON : JSON = JSON(response.result.value!)
-                    
-                    self.updateBitcoinData(json: bitcoinJSON)
-                    
-                    
-                } else {
-                    print("Error: \(String(describing: response.result.error))")
-                    self.priceLabel.text = "Connection Issues"
-                }
-        }
-        
-    }
-    func getPercentData(url: String) {
-        
-        Alamofire.request(url, method: .get)
-            
-            .responseJSON { response in
-                if response.result.isSuccess {
-                    
-                    print("Sucess! Found the change percent!")
-                    let percentJSON : JSON = JSON(response.result.value!)
-                    
-                    self.updatePercentData(json: percentJSON)
-                    
-                    
-                } else {
-                    print("Error: \(String(describing: response.result.error))")
-                    self.changeLabel.text = " "
-                }
-        }
-        
-    }
-    
-    
-    
-    
-    /************************************************************/
-    
+    /****************************************************************************/
+    //MARK: - Spin animation
     
     var animating = false
     
@@ -508,47 +469,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     
+
+/*******************************************************************************************/
     
     
-    
-    
-    
-    //MARK: - JSON Parsing
-    /***************************************************************/
-    
-    func updateBitcoinData(json : JSON) {
-        if let bitcoinResult = json["ask"].double {
-            priceLabel.text = "\(currencySelected) \(bitcoinResult)"
-            
-            
-        } else {
-            priceLabel.text = "Price Unavailable"
-        }
-    }
-    
-    func updatePercentData(json : JSON) {
-        if let percentResult = json["changes"]["percent"]["day"].double {
-            //            changeLabel.text = "\(percentResult)"
-            //            changeLabel.text = "\(percentResult)"
-            if percentResult < 0 {
-                changeLabel.textColor = negativeColour
-                changeLabel.text = "▼\(percentResult)"
-            } else {
-                changeLabel.textColor = positiveColour
-                changeLabel.text = "▲\(percentResult)"
-            }
-            
-        } else {
-            changeLabel.text = ""
-            
-        }
-    }
-    
-    
-    
-    
-    
-    //MARK: - Currency Icon Animation
+    //MARK: - Currency Icon Animation (V1)
     /***************************************************************/
     func returnIcon(iconArray: [UIImageView], currentRow: Int) -> UIImageView {
         return iconArray[currentRow - 1]
@@ -608,200 +533,567 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
         
         
-        
-        
-        //        currentIcon.frame.
-        
-        
     }
     
-    //    func currencyIconAnimationV2part2(currentRow: Int, currentIcon: UIImageView, transport: UIView, hideIcons: [UIImageView]) {
-    //        let animationOption : UIViewAnimationOptions = .curveEaseInOut
-    //
-    //
-    //        if currentRow != 0 {
-    //            let icons = [AUD, BRL, CAD, CNY, EUR, GBP, HKD, IDR, ILS, INR, JPY, MXN, NOK, NZD, PLN, RON, RUB, SEK, SGD, USD, ZAR]
-    //            let currentIcon = returnIcon(iconArray: [AUD, BRL, CAD, CNY, EUR, GBP, HKD, IDR, ILS, INR, JPY, MXN, NOK, NZD, PLN, RON, RUB, SEK, SGD, USD, ZAR], currentRow: currentRow)
-    //
-    //
-    //            //            for num in 1...array2.count {
-    //            //                array2[num - 1].frame.origin.x = centerLocation
-    //            //            }
-    //            if BTC.frame.origin.x == centerLocation {
-    //                currentIcon.isHidden = false
-    //                UIView.animate(withDuration: 1.5, delay: 0.2, options: animationOption, animations: {
-    //                    self.BTC.frame.origin.x = self.btcLocationX
-    //                    transport.frame.origin.x = self.currencyLocationX
-    //                }, completion: nil)
-    //                for num in 1...hideIcons.count {
-    //                    hideIcons[num - 1].isHidden = true
-    //                }
-    //                currentIcon.isHidden = false
-    //
-    //
-    //            } else {
-    //
-    //                UIView.animate(withDuration: 1.5, delay: 0.0, options: animationOption, animations: {
-    //                    self.BTC.frame.origin.x = self.centerLocation
-    //                    self.frame.origin.x = self.centerLocation
-    //
-    //                }, completion: { finished in
-    //                    if finished {
-    //                        self.previousIcon?.isHidden = true
-    //                        currentIcon.isHidden = false
-    //                        for num in 1...array2.count {
-    //                            array2[num - 1].isHidden = true
-    //                        }
-    //                        UIView.animate(withDuration: 1.5, delay: 0.02, options: animationOption, animations: {
-    //                            self.BTC.frame.origin.x = self.btcLocationX
-    //                            currentIcon.frame.origin.x = self.currencyLocationX
-    //
-    //                        }, completion: nil)
-    //                        self.previousIcon? = currentIcon
-    //                    }
-    //                })
-    //            }
-    //        }
-    //    }
-   
-    //        func currencyIconAnimationV2constant(currentRow: Int, currentIcon: UIImageView, transport: UIView, hideIcons: [UIImageView]) {
-    //            let animationOption : UIViewAnimationOptions = .curveEaseInOut
-    //            icon = currentIcon
-    //                if BTC.frame.origin.x == btcLocationX {
-    //
-    //
-    //                    UIView.animate(withDuration: 1.5, delay: 0.0, options: animationOption, animations: {
-    //                        self.BTC.frame.origin.x = self.centerLocation
-    //                        transport.frame.origin.x = self.centerLocation
-    //
-    //                    }, completion: nil)
-    //            }
-    //
-    //
-    //
-    //    }
-    
-}
 
-
-func setPercentLabel(url: String, label: UILabel) {
-    Alamofire.request(url, method: .get)
+    func currencyIconFadeScaleAnimation(currentRow: Int) {
+        let icons = [AUD, BRL, CAD, CNY, EUR, GBP, HKD, IDR, ILS, INR, JPY, MXN, NOK, NZD, PLN, RON, RUB, SEK, SGD, USD, ZAR]
         
-        .responseJSON { response in
-            if response.result.isSuccess {
-                
-                print("Sucess! Completed the currency conversion")
-                let json : JSON = JSON(response.result.value!)
-                if let result = json["change"]["percent"]["day"].double {
-                    // let plusOrMinus : Double = bitcoinResult
-                    let bitcoinResult : Double = result
-                    if bitcoinResult < 0 {
-                        let finalPercent : String = "▼\(bitcoinResult * (-1))"
-                        label.text = finalPercent
-                        label.textColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
-                        
-                        //                                                        let attributedString = NSAttributedString(string: finalPercent, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)])
-                        //                                                        label.attributedText = attributedString
-                    } else if bitcoinResult > 0 {
-                        let finalPercent : String = "▲\(bitcoinResult)"
-                        label.text = finalPercent
-                        label.textColor = #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)
-                        
-                        //                                                        let attributedString = NSAttributedString(string: finalPercent, attributes: [NSAttributedStringKey.foregroundColor : #colorLiteral(red: 0, green: 1, blue: 0, alpha: 1)])
-                        //                                                        label.attributedText = attributedString
+        if BTC.frame.origin.x == centerLocation {
+            UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseInOut, animations: {
+                icons[currentRow - 1]?.frame.origin.x = self.currencyLocationX
+                self.BTC.frame.origin.x = self.btcLocationX
+            }, completion: nil)
+            
+        } else {
+            
+            if AUD.isHidden == false {
+                icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+                icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+                icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+                icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+                icons[currentRow - 1]?.alpha = 0.0
+                UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+                    self.AUD.frame.size.width -= 50
+                    self.AUD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+                    self.AUD.frame.origin.y -= 30
+                    self.AUD.frame.origin.x += 25
+                    self.AUD.alpha = 0.0
+                    icons[currentRow - 1]?.frame.size.width += 50
+                    icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+                    icons[currentRow - 1]?.frame.origin.y += 30
+                    icons[currentRow - 1]?.frame.origin.x -= 25
+                    icons[currentRow - 1]?.alpha = 1.0
+                }) { finished in
+                    if finished {
+                        self.AUD.frame.origin.x = self.smallX
+                        self.AUD.frame.origin.y = self.smallY
                     }
-                    
-                    
-                } else {
-                    label.text = ""
                 }
                 
-                
             }
-    }
-}
-
-extension UIButton {
-    
-    func startRotate() {
-        let rotation : CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotation.fromValue = 0
-        rotation.toValue = NSNumber(value: Double.pi * 2)
-        rotation.duration = 2 //1
-        rotation.isCumulative = true
-        rotation.repeatCount = Float.greatestFiniteMagnitude
-        self.layer.add(rotation, forKey: "rotationAnimation")
+        }
+     //   icon[currentRow - 1]
+  
+        
+        
     }
     
-    func stopRotate() {
-        self.layer.removeAnimation(forKey: "rotationAnimation")
-    }
-}
+    
+    
+
+} // End of ViewController Class
+
+
 
 /*
- M_PI --> 3.14159265358979
- M_PI_2 --> 1.5707963267949
- Double.pi --> 3.14159265358979
- Double.pi * 2 --> 6.28318530717959
- */
-
-
-//MARK: - JSON Results
-/***************************************************************/
-/*
- {
- "ask": 8693.49,
- "bid": 8684.24,
- "last": 8691.26,
- "high": 9303.96,
- "low": 7456.06,
- "open": {
- "hour": 8962.63,
- "day": 8658.63,
- "week": 14027.45,
- "month": 20955.59,
- "month_3": 9108.95,
- "month_6": 4043.01,
- "year": 1300.20
- },
- "averages": {
- "day": 8304.76,
- "week": 8690.67,
- "month": 10912.96
- },
- "volume": 602377.81590893,
- "changes": {
- "percent": {
- "hour": -3.03,
- "day": 0.38,
- "week": -38.04,
- "month": -58.53,
- "month_3": -4.59,
- "month_6": 114.97,
- "year": 568.46
- },
- "price": {
- "hour": -271.37,
- "day": 32.63,
- "week": -5336.19,
- "month": -12264.33,
- "month_3": -417.69,
- "month_6": 4648.25,
- "year": 7391.06
+ 
+ if AUD.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.AUD.frame.size.width -= 50
+ self.AUD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.AUD.frame.origin.y -= 30
+ self.AUD.frame.origin.x += 25
+ self.AUD.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.AUD.frame.origin.x = self.smallX
+ self.AUD.frame.origin.y = self.smallY
  }
- },
- "volume_percent": 0.55,
- "timestamp": 1517928282,
- "display_timestamp": "2018-02-06 14:44:42"
  }
- */
-
-
-//
-//{ finished in
-//    if finished {
-//
-//}
-//}
-
-
+ 
+ } else if BRL.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.BRL.frame.size.width -= 50
+ self.BRL.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.BRL.frame.origin.y -= 30
+ self.BRL.frame.origin.x += 25
+ self.BRL.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.BRL.frame.origin.x = self.smallX
+ self.BRL.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if CAD.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.CAD.frame.size.width -= 50
+ self.CAD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.CAD.frame.origin.y -= 30
+ self.CAD.frame.origin.x += 25
+ self.CAD.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.CAD.frame.origin.x = self.smallX
+ self.CAD.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if CNY.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.CNY.frame.size.width -= 50
+ self.CNY.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.CNY.frame.origin.y -= 30
+ self.CNY.frame.origin.x += 25
+ self.CNY.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.CNY.frame.origin.x = self.smallX
+ self.CNY.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if EUR.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.EUR.frame.size.width -= 50
+ self.EUR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.EUR.frame.origin.y -= 30
+ self.EUR.frame.origin.x += 25
+ self.EUR.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.EUR.frame.origin.x = self.smallX
+ self.EUR.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if GBP.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.GBP.frame.size.width -= 50
+ self.GBP.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.GBP.frame.origin.y -= 30
+ self.GBP.frame.origin.x += 25
+ self.GBP.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.GBP.frame.origin.x = self.smallX
+ self.GBP.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if HKD.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.HKD.frame.size.width -= 50
+ self.HKD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.HKD.frame.origin.y -= 30
+ self.HKD.frame.origin.x += 25
+ self.HKD.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.HKD.frame.origin.x = self.smallX
+ self.HKD.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if IDR.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.IDR.frame.size.width -= 50
+ self.IDR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.IDR.frame.origin.y -= 30
+ self.IDR.frame.origin.x += 25
+ self.IDR.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.IDR.frame.origin.x = self.smallX
+ self.IDR.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if ILS.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.ILS.frame.size.width -= 50
+ self.ILS.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.ILS.frame.origin.y -= 30
+ self.ILS.frame.origin.x += 25
+ self.ILS.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.ILS.frame.origin.x = self.smallX
+ self.ILS.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if INR.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.INR.frame.size.width -= 50
+ self.INR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.INR.frame.origin.y -= 30
+ self.INR.frame.origin.x += 25
+ self.INR.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.INR.frame.origin.x = self.smallX
+ self.INR.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if JPY.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.JPY.frame.size.width -= 50
+ self.JPY.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.JPY.frame.origin.y -= 30
+ self.JPY.frame.origin.x += 25
+ self.JPY.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.JPY.frame.origin.x = self.smallX
+ self.JPY.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if MXN.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.MXN.frame.size.width -= 50
+ self.MXN.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.MXN.frame.origin.y -= 30
+ self.MXN.frame.origin.x += 25
+ self.MXN.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.MXN.frame.origin.x = self.smallX
+ self.MXN.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if NOK.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.NOK.frame.size.width -= 50
+ self.NOK.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.NOK.frame.origin.y -= 30
+ self.NOK.frame.origin.x += 25
+ self.NOK.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.NOK.frame.origin.x = self.smallX
+ self.NOK.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if NZD.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.NZD.frame.size.width -= 50
+ self.NZD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.NZD.frame.origin.y -= 30
+ self.NZD.frame.origin.x += 25
+ self.NZD.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.NZD.frame.origin.x = self.smallX
+ self.NZD.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if PLN.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.PLN.frame.size.width -= 50
+ self.PLN.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.PLN.frame.origin.y -= 30
+ self.PLN.frame.origin.x += 25
+ self.PLN.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.PLN.frame.origin.x = self.smallX
+ self.PLN.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if RON.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.RON.frame.size.width -= 50
+ self.RON.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.RON.frame.origin.y -= 30
+ self.RON.frame.origin.x += 25
+ self.RON.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.RON.frame.origin.x = self.smallX
+ self.RON.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if RUB.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.RUB.frame.size.width -= 50
+ self.RUB.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.RUB.frame.origin.y -= 30
+ self.RUB.frame.origin.x += 25
+ self.RUB.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.RUB.frame.origin.x = self.smallX
+ self.RUB.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if SEK.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.SEK.frame.size.width -= 50
+ self.SEK.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.SEK.frame.origin.y -= 30
+ self.SEK.frame.origin.x += 25
+ self.SEK.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.SEK.frame.origin.x = self.smallX
+ self.SEK.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if SGD.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.SGD.frame.size.width -= 50
+ self.SGD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.SGD.frame.origin.y -= 30
+ self.SGD.frame.origin.x += 25
+ self.SGD.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.SGD.frame.origin.x = self.smallX
+ self.SGD.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if USD.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.USD.frame.size.width -= 50
+ self.USD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.USD.frame.origin.y -= 30
+ self.USD.frame.origin.x += 25
+ self.USD.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.USD.frame.origin.x = self.smallX
+ self.USD.frame.origin.y = self.smallY
+ }
+ }
+ 
+ } else if ZAR.isHidden == false {
+ icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
+ icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
+ icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
+ icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
+ icons[currentRow - 1]?.alpha = 0.0
+ UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+ self.ZAR.frame.size.width -= 50
+ self.ZAR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
+ self.ZAR.frame.origin.y -= 30
+ self.ZAR.frame.origin.x += 25
+ self.ZAR.alpha = 0.0
+ icons[currentRow - 1]?.frame.size.width += 50
+ icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
+ icons[currentRow - 1]?.frame.origin.y += 30
+ icons[currentRow - 1]?.frame.origin.x -= 25
+ icons[currentRow - 1]?.alpha = 1.0
+ }) { finished in
+ if finished {
+ self.ZAR.frame.origin.x = self.smallX
+ self.ZAR.frame.origin.y = self.smallY
+ }
+ }
+ 
+ }
+ 
+ 
+ 
+*/

@@ -20,7 +20,7 @@
 /* Begin PBXFileReference section */
 		82320E1BAFDAE1050448158D /* Pods-Bitcoinify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bitcoinify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bitcoinify/Pods-Bitcoinify.debug.xcconfig"; sourceTree = "<group>"; };
 		86F41E0AA624C14E928B0A6C /* Pods-Bitcoinify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bitcoinify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bitcoinify/Pods-Bitcoinify.release.xcconfig"; sourceTree = "<group>"; };
-		C29FB9A82036D069005AC780 /* Bitcoinify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bitcoinify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C29FB9A82036D069005AC780 /* Bitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29FB9AB2036D069005AC780 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C29FB9AD2036D069005AC780 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C29FB9B02036D069005AC780 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 		C29FB9A92036D069005AC780 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C29FB9A82036D069005AC780 /* Bitcoinify.app */,
+				C29FB9A82036D069005AC780 /* Bitify.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,9 +97,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C29FB9A72036D069005AC780 /* Bitcoinify */ = {
+		C29FB9A72036D069005AC780 /* Bitify */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Bitcoinify" */;
+			buildConfigurationList = C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Bitify" */;
 			buildPhases = (
 				6DF1194D60E6EACCF6E545B5 /* [CP] Check Pods Manifest.lock */,
 				C29FB9A42036D069005AC780 /* Sources */,
@@ -112,9 +112,9 @@
 			);
 			dependencies = (
 			);
-			name = Bitcoinify;
+			name = Bitify;
 			productName = Bitcoinify;
-			productReference = C29FB9A82036D069005AC780 /* Bitcoinify.app */;
+			productReference = C29FB9A82036D069005AC780 /* Bitify.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -133,7 +133,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Bitcoinify" */;
+			buildConfigurationList = C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Bitify" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -146,7 +146,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C29FB9A72036D069005AC780 /* Bitcoinify */,
+				C29FB9A72036D069005AC780 /* Bitify */,
 			);
 		};
 /* End PBXProject section */
@@ -370,7 +370,7 @@
 				DEVELOPMENT_TEAM = JPFSXG2FT6;
 				INFOPLIST_FILE = Bitcoinify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Bitcoinify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Bitify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -386,7 +386,7 @@
 				DEVELOPMENT_TEAM = JPFSXG2FT6;
 				INFOPLIST_FILE = Bitcoinify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Bitcoinify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Bitify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -396,7 +396,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Bitcoinify" */ = {
+		C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Bitify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C29FB9B82036D069005AC780 /* Debug */,
@@ -405,7 +405,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Bitcoinify" */ = {
+		C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Bitify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C29FB9BB2036D069005AC780 /* Debug */,

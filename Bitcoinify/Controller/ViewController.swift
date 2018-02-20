@@ -18,6 +18,8 @@ class IconState {
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     
+/***********************************************/
+    //MARK: - Class-Wide Values
     var currencySelected = ""
     var runs : Int = 0
     var bitcoinPrice : Double = 0
@@ -26,7 +28,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     //  let onlyCurrencyARray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
     var finalURL = ""
     let currencySymbolsArray = ["$", "R$", "$", "¥", "€", "£", "$", "Rp", "₪", "₹", "¥", "$", "kr", "$", "zł", "lei", "₽", "kr", "$", "$", "R"]
-    
     
     var bitcoinHeight : CGFloat = 0
     var bitcoinWidth : CGFloat = 0
@@ -51,12 +52,20 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     let positiveColour : UIColor = #colorLiteral(red: 0.1101273373, green: 0.9998249412, blue: 0.2622338533, alpha: 1)
     let webNegativeColour : UIColor = #colorLiteral(red: 0.9983710647, green: 0.2906047106, blue: 0.4062339067, alpha: 1)
     let webPositiveColour : UIColor = #colorLiteral(red: 0.2362090647, green: 0.7374139428, blue: 0.5960354209, alpha: 1)
-    //    var currentIcon : UIImageView?
-    // var previousIcon : UIImageView?
+    var iconArray : [UIImageView] = []
+    var iconArrayBTC : [UIImageView] = []
+    var centerLocation : CGFloat = 0
+    var currentRow : Int = 0
+    var currentDisplayRow : Int = 0
+    var smallWidth : CGFloat = 0//btcWidth - 50
+    var smallHeight : CGFloat = 0//btcHeight - (50 * (self.btcHeight / self.btcWidth))
+    var smallY : CGFloat = 0//currencyLocationY - 30
+    var smallX : CGFloat = 0//currencyLocationX + 25
+   
     
-    //  let bitcoinDataModel = BitcoinDataModel()
     
-    //Pre-setup IBOutlets
+/***********************************************/
+    //MARK: - @IBOutlets
     @IBOutlet weak var reloadButton: UIButton!
     @IBOutlet weak var bitcoinHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bitcoinWidthConstraint: NSLayoutConstraint!
@@ -90,16 +99,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var bitcoin: UIImageView!
     
     
-    var iconArray : [UIImageView] = []
-    var iconArrayBTC : [UIImageView] = []
-    var centerLocation : CGFloat = 0
-    var currentRow : Int = 0
-    var currentDisplayRow : Int = 0
-    var smallWidth : CGFloat = 0//btcWidth - 50
-    var smallHeight : CGFloat = 0//btcHeight - (50 * (self.btcHeight / self.btcWidth))
-    var smallY : CGFloat = 0//currencyLocationY - 30
-    var smallX : CGFloat = 0//currencyLocationX + 25
     
+    
+    
+    
+/***********************************************/
+    //MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,6 +168,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         ZAR.frame.origin.x = centerLocation
         BTC.frame.origin.x = centerLocation
         
+    currencyPicker.backgroundColor?.withAlphaComponent(0.0)
+        
         AUD.alpha = 0.0
         BRL.alpha = 0.0
         CAD.alpha = 0.0
@@ -197,6 +204,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         priceLabel.isHidden = true
         
     }
+    
+    
+    
+    //MARK: - viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
        
@@ -237,7 +248,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /***************************************************************/
+/***************************************************************/
     
     //MARK: - UIPickerView Delegate Methods
     
@@ -274,6 +285,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             updateInterfaceForPickerview(finalURL: finalURL, currencySelected: currencySelected)
         }
     }
+    
+    
+    
     
     
     
@@ -321,8 +335,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
         
     }
-    
-    
     
     
     
@@ -408,6 +420,19 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
     }
 
+    
+    /****************************************************************************/
+    //MARK: - Graph
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -606,6 +631,18 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let setIcon = currentIcon
         completion(isSuccess, setIcon)
     }
+    
+    //MARK: - Graph Section
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 } // End of ViewController Class

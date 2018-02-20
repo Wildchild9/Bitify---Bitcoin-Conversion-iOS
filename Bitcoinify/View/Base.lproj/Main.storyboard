@@ -25,7 +25,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Bitcoinify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Bitify" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AZj-4A-dTR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -320,6 +320,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="LRI-sK-Qgm"/>
                                                 </constraints>
                                                 <state key="normal" backgroundImage="Sync"/>
+                                                <connections>
+                                                    <action selector="reloadData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mxi-K2-uMf"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>

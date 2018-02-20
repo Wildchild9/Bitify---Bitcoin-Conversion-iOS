@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import ScrollableGraphView
 
 class IconState {
     var icon = UIImageView()

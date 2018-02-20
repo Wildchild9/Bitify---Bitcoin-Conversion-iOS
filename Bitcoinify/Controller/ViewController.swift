@@ -128,6 +128,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         currencyWidth = CAD.frame.size.width
         currencyHeight = CAD.frame.size.height
         
+        bitcoin.frame.size = CGSize(width: 175, height: 175)
+        bitcoin.center = view.center
         
         currencyPicker.delegate = self
         currencyPicker.dataSource = self
@@ -194,17 +196,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         priceLabel.sizeToFit()
         priceLabel.isHidden = true
         
-        
-        bitcoin.frame.size = CGSize(width: 175, height: 175)
-        bitcoin.center = view.center
-        
-        animateBitcoin()
-        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-     
-        
+       
+        bitcoin.frame.size = CGSize(width: 175, height: 175)
+        bitcoin.center = view.center
+        animateBitcoin()
         priceLabel.text = ""
         
         AUD.alpha = 0.0
@@ -279,7 +277,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    
+    //TODO: - Consider integrating the pod 'PKHUD' to deal with errors on the UI's front
     
     
     
@@ -491,7 +489,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         rotateAnimation.duration = 2.0
         
         
-        let duration : Double = 0.25
+        let duration : Double = 0.09
         let delay : Double = duration / 2
         UIView.animate(withDuration: 2, delay: 0.0, options: .curveEaseIn, animations: {
             

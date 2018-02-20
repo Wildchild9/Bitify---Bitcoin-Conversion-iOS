@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Helvetica.ttc">
-            <string>Helvetica</string>
-        </array>
-        <array key="Moon Bold.otf">
-            <string>Moon-Bold</string>
-        </array>
-        <array key="TrebuchetMS.ttf">
-            <string>TrebuchetMS</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -322,8 +311,8 @@
                                             <constraint firstItem="cqK-cY-ega" firstAttribute="top" secondItem="kw6-vf-ZdF" secondAttribute="top" constant="41" id="win-mS-2oy"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12345" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n8n-ir-AUN" userLabel="Percent Label">
-                                        <rect key="frame" x="310" y="183" width="53" height="28"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="12345" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n8n-ir-AUN" userLabel="Percent Label">
+                                        <rect key="frame" x="304.5" y="183" width="53" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="oQo-1h-bVw"/>
                                         </constraints>
@@ -338,7 +327,7 @@
                                     <constraint firstItem="IcH-HZ-4c2" firstAttribute="top" secondItem="dq2-zT-8TP" secondAttribute="top" id="9L5-Fd-1W2"/>
                                     <constraint firstAttribute="trailing" secondItem="IcH-HZ-4c2" secondAttribute="trailing" id="DFM-Ai-QfV"/>
                                     <constraint firstAttribute="bottom" secondItem="IcH-HZ-4c2" secondAttribute="bottom" id="Fkm-UR-trH"/>
-                                    <constraint firstItem="n8n-ir-AUN" firstAttribute="leading" secondItem="Q1j-Lh-Eyw" secondAttribute="trailing" constant="13" id="GDG-sZ-9tX"/>
+                                    <constraint firstItem="n8n-ir-AUN" firstAttribute="leading" secondItem="Q1j-Lh-Eyw" secondAttribute="trailing" constant="7.5" id="GDG-sZ-9tX"/>
                                     <constraint firstItem="Q1j-Lh-Eyw" firstAttribute="top" secondItem="kw6-vf-ZdF" secondAttribute="bottom" constant="8" id="H2F-oU-btd"/>
                                     <constraint firstItem="kw6-vf-ZdF" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="LxU-2R-d98"/>
                                     <constraint firstItem="0Cc-Ja-nJS" firstAttribute="centerX" secondItem="dq2-zT-8TP" secondAttribute="centerX" id="Nru-cf-3cb"/>

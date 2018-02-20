@@ -13,14 +13,25 @@ import ScrollableGraphView
 
 class IconState {
     var icon = UIImageView()
+    var iconRow : Int = 0
     static let lastIcon = IconState() // This is a singleton; it is accessible across all classes and objects
+    
+}
+class ReloadState {
+     var canReload : Bool = false
+    static let reload = ReloadState() // This is a singleton
+}
+class CurrentRow {
+    var number : Int = 0
+    static let row = CurrentRow() // This is a singleton
 }
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     
 /***********************************************/
-    //MARK: - Class-Wide Values
+//MARK: - Class-Wide Values
+    
     var currencySelected = ""
     var runs : Int = 0
     var bitcoinPrice : Double = 0
@@ -65,8 +76,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
    
     
     
+    
+    
 /***********************************************/
-    //MARK: - @IBOutlets
+//MARK: - @IBOutlets
+    
     @IBOutlet weak var reloadButton: UIButton!
     @IBOutlet weak var bitcoinHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bitcoinWidthConstraint: NSLayoutConstraint!
@@ -99,20 +113,28 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var priceLabel: UILabel! /////////////////////////
     @IBOutlet weak var bitcoin: UIImageView!
     
+//TODO - Graph @IBOutlets
     
-    
+    @IBOutlet weak var graph: ScrollableGraphView!
+    @IBOutlet weak var dateStack: UIStackView!
+    @IBOutlet weak var dateLabel1: UILabel!
+    @IBOutlet weak var dateLabel2: UILabel!
+    @IBOutlet weak var dateLabel3: UILabel!
+    @IBOutlet weak var dateLabel4: UILabel!
+    @IBOutlet weak var dateLabel5: UILabel!
+    @IBOutlet weak var dateLabel6: UILabel!
+    @IBOutlet weak var dateLabel7: UILabel!
+ 
     
     
     
 /***********************************************/
-    //MARK: - viewDidLoad
+//MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        smallWidth = btcWidth - 50
-        smallHeight = btcHeight - (50 * (self.btcHeight / self.btcWidth))
-        smallY = currencyLocationY - 30
-        smallX = currencyLocationX + 25
+        
+        
         bitcoinHeight = bitcoin.frame.size.height
         bitcoinWidth = bitcoin.frame.size.width
         bitcoinX = bitcoin.frame.origin.x
@@ -136,6 +158,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         bitcoin.frame.size = CGSize(width: 175, height: 175)
         bitcoin.center = view.center
+        
+        ReloadState.reload.canReload = false
         
         currencyPicker.delegate = self
         currencyPicker.dataSource = self
@@ -194,6 +218,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         ZAR.alpha = 0.0
         BTC.frame.origin.x = centerLocation
         
+        smallWidth = btcWidth - 50
+        smallHeight = btcHeight - (50 * (self.btcHeight / self.btcWidth))
+        smallY = currencyLocationY - 30
+        smallX = currencyLocationX + 25
+        
         BTC.alpha = 0
         currencyPicker.alpha = 0
         reloadButton.alpha = 0
@@ -208,7 +237,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    //MARK: - viewDidAppear
+//MARK: - viewDidAppear
+    
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
        
@@ -251,7 +283,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
 /***************************************************************/
     
-    //MARK: - UIPickerView Delegate Methods
+//MARK: - UIPickerView Delegate Methods
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -272,7 +304,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     // This will get called every time the picker is scrolled
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         currentRow = row
-        
+        CurrentRow.row.number = row
         finalURL = baseURL + currencyArray[row]
  
         if row > 0 {
@@ -297,8 +329,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /***************************************************************/
-    //MARK: - Update User Interface for UIPickerView Function
+/***************************************************************/
+//MARK: - Update User Interface for UIPickerView Function
     
     func updateInterfaceForPickerview(finalURL: String, currencySelected: String) {
         priceLabel.isHidden = false
@@ -340,11 +372,22 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /***************************************************************/
-    //MARK: - Reload Button Action
+/***************************************************************/
+//MARK: - Reload Button Action
     
     @IBAction func reloadData(_ sender: Any) {
-        if currentRow > 0 && currentDisplayRow != 0 {
+        
+        if CurrentRow.row.number == 0 && ReloadState.reload.canReload == true {
+            spin(with: .curveLinear)
+            startSpin()
+            print(IconState.lastIcon.iconRow)
+            reloadData(row: IconState.lastIcon.iconRow) { isComplete in
+                if isComplete {
+                    self.stopSpin()
+                }
+                
+            }
+        } else if currentRow > 0 && currentDisplayRow != 0 {
             spin(with: .curveLinear)
             startSpin()
             reloadData(row: currentRow) { isComplete in
@@ -363,8 +406,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /***************************************************************/
-    //MARK: - Reload Data Function
+/***************************************************************/
+//MARK: - Reload Data Function
     func reloadData(row: Int, completion: ((Bool) -> Void)? = nil) {
         priceLabel.isHidden = false
         changeLabel.isHidden = false
@@ -422,8 +465,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
 
     
-    /****************************************************************************/
-    //MARK: - Graph
+/****************************************************************************/
+//MARK: - Graph
     
     
     
@@ -438,8 +481,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /****************************************************************************/
-    //MARK: - Quick Fade Animations for Percent Label (for reload)
+/****************************************************************************/
+//MARK: - Quick Fade Animations for Percent Label (for reload)
     func fadeOutLabel(label: UILabel) {
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
             label.alpha = 0
@@ -464,8 +507,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /****************************************************************************/
-    //MARK: - Spin animation
+/****************************************************************************/
+//MARK: - Spin animation
     
     var animating = false
     
@@ -502,8 +545,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /****************************************************************************/
-    //MARK: - Initial Bitcoin Animation Functions
+/****************************************************************************/
+//MARK: - Initial Bitcoin Animation Functions
     
     func animateBitcoin() {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
@@ -562,8 +605,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /****************************************************************************/
-    //MARK: - Currency Icon Fade & Scale Animation
+/****************************************************************************/
+//MARK: - Currency Icon Fade & Scale Animation
 
     func currencyIconFadeScaleAnimation(currentRow: Int) {
         let icons = [AUD, BRL, CAD, CNY, EUR, GBP, HKD, IDR, ILS, INR, JPY, MXN, NOK, NZD, PLN, RON, RUB, SEK, SGD, USD, ZAR]
@@ -572,19 +615,28 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         if BTC.frame.origin.x == centerLocation {
         IconState.lastIcon.icon = currentIcon
+        IconState.lastIcon.iconRow = CurrentRow.row.number
+            print(IconState.lastIcon.iconRow)
             currentIcon.frame.origin.x = BTC.frame.origin.x
             currentIcon.alpha = 1
             UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseInOut, animations: {
                 currentIcon.frame.origin.x = self.currencyLocationX
                 self.BTC.frame.origin.x =  self.btcLocationX
                 self.changeLabel.alpha = 1
-            }, completion: nil)
+            }) { finished in
+                if finished {
+                    ReloadState.reload.canReload = true
+                } else {
+                    ReloadState.reload.canReload = true
+                }
+            }
             
         } else {
-            
-            singleCurrencyIconAnimation(currentIcon: currentIcon, previousIcon: IconState.lastIcon.icon, row: currentRow) { (isSuccess, setIcon) in
+            ReloadState.reload.canReload = true
+            singleCurrencyIconAnimation(currentIcon: currentIcon, previousIcon: IconState.lastIcon.icon, row: CurrentRow.row.number) { (isSuccess, rowNumber, setIcon) in
                 if isSuccess {
                     IconState.lastIcon.icon = setIcon
+                    IconState.lastIcon.iconRow = rowNumber
                 }
             }
         }
@@ -595,10 +647,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
-    /****************************************************************************/
-    //MARK: - Single Currency Icon Animation
+/****************************************************************************/
+//MARK: - Single Currency Icon Animation
     
-    func singleCurrencyIconAnimation(currentIcon: UIImageView, previousIcon: UIImageView, row: Int, completion: (Bool, UIImageView) -> Void) {
+    func singleCurrencyIconAnimation(currentIcon: UIImageView, previousIcon: UIImageView, row: Int, completion: (Bool, Int, UIImageView) -> Void) {
+        let rowNumber : Int = row
         if currentIcon != previousIcon {
             previousIcon.isHidden = false
             currentIcon.isHidden = false
@@ -630,10 +683,22 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
         let isSuccess = true
         let setIcon = currentIcon
-        completion(isSuccess, setIcon)
+        completion(isSuccess, rowNumber, setIcon)
     }
     
-    //MARK: - Graph Section
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//MARK: - Graph Section
     
     
     
@@ -646,6 +711,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
 
+    
+    
+    
+    
+    
+    
 } // End of ViewController Class
 
 

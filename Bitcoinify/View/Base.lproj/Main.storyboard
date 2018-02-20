@@ -34,7 +34,6 @@
                                 <subviews>
                                     <pickerView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Ihf-PJ-EJ5">
                                         <rect key="frame" x="0.0" y="451" width="375" height="216"/>
-                                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="216" id="4Po-oi-o6M"/>
                                         </constraints>
@@ -456,6 +455,15 @@
                         <outlet property="changeLabel" destination="n8n-ir-AUN" id="8P4-6T-Ksh"/>
                         <outlet property="currencyIconContainer" destination="Q1j-Lh-Eyw" id="fxn-vw-xV1"/>
                         <outlet property="currencyPicker" destination="Ihf-PJ-EJ5" id="AFV-qY-ogP"/>
+                        <outlet property="dateLabel1" destination="Ai8-YJ-wQo" id="1H1-e6-CvV"/>
+                        <outlet property="dateLabel2" destination="y63-Z2-DVy" id="i4t-h4-1Pi"/>
+                        <outlet property="dateLabel3" destination="fgA-O1-vS3" id="cXJ-o4-XQy"/>
+                        <outlet property="dateLabel4" destination="cUP-kh-4dH" id="c9h-NT-ekR"/>
+                        <outlet property="dateLabel5" destination="fPi-Zg-nLY" id="Zn6-v9-usF"/>
+                        <outlet property="dateLabel6" destination="225-7D-WVm" id="r4Z-8t-RCG"/>
+                        <outlet property="dateLabel7" destination="LV3-oJ-9LU" id="hls-NT-NxS"/>
+                        <outlet property="dateStack" destination="ed6-xi-89t" id="hEA-Cb-x3B"/>
+                        <outlet property="graph" destination="aWU-Op-t33" id="4yB-LM-2de"/>
                         <outlet property="priceLabel" destination="0Cc-Ja-nJS" id="eGW-1K-AYw"/>
                         <outlet property="reloadButton" destination="cqK-cY-ega" id="ElS-Sk-E5t"/>
                     </connections>

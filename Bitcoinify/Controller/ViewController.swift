@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class IconState {
     var icon = UIImageView()
-    static let lastIcon = IconState()
+    static let lastIcon = IconState() // This is a singleton; it is accessible across all classes and objects
 }
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -131,7 +131,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         currencyPicker.delegate = self
         currencyPicker.dataSource = self
-        changeLabel.text = " "
+        changeLabel.text = ""
         
         
         for item in 1...iconArrayBTC.count {
@@ -188,10 +188,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         currencyPicker.alpha = 0
         reloadButton.alpha = 0
         arrow.isHidden = true
+      
+        changeLabel.alpha = 0
         
-        
-        //        changeLabel.isHidden = true /**************************/
-        //   changeLabel.text = "" /**************************/
         priceLabel.sizeToFit()
         priceLabel.isHidden = true
         
@@ -204,7 +203,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // changeLabel.isHidden = true /**************************/
+     
         
         priceLabel.text = ""
         
@@ -236,68 +235,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
     }
     
-    func animateBitcoin() {
-        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        rotateAnimation.timingFunction = CAMediaTimingFunction(name: "easeIn")
-        rotateAnimation.fromValue = CGFloat.pi
-        rotateAnimation.toValue = 0
-        rotateAnimation.isAdditive = true
-        
-        rotateAnimation.duration = 2.0
-        
-        
-        
-        // let π : CGFloat = (CGFloat.pi * 2)
-        
-        let duration : Double = 0.25
-        let delay : Double = duration / 2
-        UIView.animate(withDuration: 2, delay: 0.0, options: .curveEaseIn, animations: {
-            //            UIView.animate(withDuration: 0.1) { () -> Void in
-            //                self.bitcoin.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            //            }
-            //            UIView.animate(withDuration: 0.1, delay: 0.1, options: UIViewAnimationOptions.curveEaseOut, animations: { () -> Void in
-            //                self.bitcoin.transform = CGAffineTransform(rotationAngle: CGFloat(CGFloat.pi * 2))
-            //            }, completion: nil)
-            self.bitcoin.frame.size.height = self.bitcoinHeight
-            self.bitcoin.frame.size.width = self.bitcoinWidth
-            self.bitcoin.frame.origin.x = self.bitcoinX
-            self.bitcoin.frame.origin.y = self.bitcoinY
-            //   self.bitcoin.layer.add(rotateAnimation, forKey: "rotate")
-            //self.bitcoin.transform = CGAffineTransform(rotationAngle: CGFloat.pi).concatenating(CGAffineTransform(rotationAngle: (CGFloat.pi * 2)))
-            //self.bitcoin.rotate360Degrees()
-            // infiniteRotateSpinningView(self.bitcoin)
-            UIView.animate(withDuration: duration) { () -> Void in
-                self.bitcoin.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-            }
-            
-            UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
-                self.bitcoin.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
-            }, completion: nil)
-            //            self.bitcoin.transform.rotated(by: 390)
-            //self.bitcoin.transform = CGAffineTransform(rotationAngle: (CGFloat.pi * 2))
-            
-        }){ finished in
-            if finished {
-                self.BTC.frame.origin.x = self.centerLocation
-                UIView.animate(withDuration: 2.5, delay: 0.4, usingSpringWithDamping: 0.5, initialSpringVelocity: 2, options: .curveEaseInOut, animations: { //(withDuration: 2, delay: 0.4, options: .curveEaseInOut, animations: {
-                    self.BTC.alpha = 1
-                    self.reloadButton.alpha = 1
-                    
-                    
-                }, completion: nil)
-                UIView.animate(withDuration: 2.5, delay: 0.65, usingSpringWithDamping: 0.5, initialSpringVelocity: 2, options: .curveEaseInOut, animations: { //(withDuration: 2, delay: 0.4, options: .curveEaseInOut, animations: {
-                    
-                    self.currencyPicker.alpha = 1
-                    
-                }, completion: { (completed: Bool) in
-                    if completed == true {
-                        self.arrow.isHidden = false
-                        
-                    }
-                })
-            }
-        }
-    }
+    
     
     
     
@@ -333,30 +271,60 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
             currencyIconFadeScaleAnimation(currentRow: row)
             
-            priceLabel.isHidden = false
             
-            getSpecificBitcoinDataCompletion(url: finalURL, requestedData: "[ask]", currencySelected: currencySelected) { (isSuccess: Bool, data: String) in
-                if isSuccess == true {
-                    self.priceLabel.text = data
-                } else {
-                    self.priceLabel.text = data
-                }
-            }
-            getSpecificBitcoinDataCompletion(url: finalURL, requestedData: "[changes][percent][day]", currencySelected: currencySelected){ (isSuccess: Bool, data: String) in
-                if isSuccess == true {
-                    if data.first == "-" {
-                        self.changeLabel.text = "▼" + data.dropFirst()
-                        self.changeLabel.textColor = self.negativeColour
-                    } else {
-                        self.changeLabel.text = "▲" + data
-                        self.changeLabel.textColor = self.positiveColour
-                    }
-                } else {
-                    self.changeLabel.text = data
-                }
-            }
+            
+            updateInterfaceForPickerview(finalURL: finalURL, currencySelected: currencySelected)
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    /***************************************************************/
+    //MARK: - Update User Interface for UIPickerView Function
+    
+    func updateInterfaceForPickerview(finalURL: String, currencySelected: String) {
+        priceLabel.isHidden = false
+        changeLabel.isHidden = false
+        getSpecificBitcoinDataCompletion(url: finalURL, requestedData: "[ask]", currencySelected: currencySelected) { (isSuccess: Bool, data: String) in
+            if isSuccess == true {
+                let priceData = data
+                
+                getSpecificBitcoinDataCompletion(url: finalURL, requestedData: "[changes][percent][day]", currencySelected: currencySelected){ (isSuccess: Bool, data: String) in
+                    if isSuccess == true {
+                        self.priceLabel.text = priceData
+                        if data.first == "-" {
+                            self.changeLabel.text = "▼" + data.dropFirst()
+                            self.changeLabel.textColor = self.negativeColour
+                            if self.changeLabel.alpha == 0 {
+                                self.fadeInLabel(label: self.changeLabel)
+                            }
+                        } else {
+                            self.changeLabel.text = "▲" + data
+                            self.changeLabel.textColor = self.positiveColour
+                            if self.changeLabel.alpha == 0 {
+                                self.fadeInLabel(label: self.changeLabel)
+                            }
+                        }
+                    } else {
+                        print("Error when getting percent label data (not price label)")
+                    }
+                }
+                
+                
+            } else {
+                self.priceLabel.text = "Price Unavailable"
+                self.fadeOutLabel(label: self.changeLabel)
+            }
+        }
+        
+    }
+    
+    
     
     
     
@@ -382,9 +350,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
+    
+    
     /***************************************************************/
     //MARK: - Reload Data Function
     func reloadData(row: Int, completion: ((Bool) -> Void)? = nil) {
+        priceLabel.isHidden = false
+        changeLabel.isHidden = false
         let reloadURL = baseURL + currencyArray[row]
         currencySelected = currencySymbolsArray[row - 1]
         priceLabel.isHidden = false
@@ -399,19 +371,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                         if data.first == "-" {
                             self.changeLabel.text = "▼" + data.dropFirst()
                             self.changeLabel.textColor = self.negativeColour
-                            
+                            if self.changeLabel.alpha == 0 {
+                                self.fadeInLabel(label: self.changeLabel)
+                            }
                         } else {
                             self.changeLabel.text = "▲" + data
                             self.changeLabel.textColor = self.positiveColour
-                            
+                            if self.changeLabel.alpha == 0 {
+                                self.fadeInLabel(label: self.changeLabel)
+                            }
                         }
+                        
                         let isComplete = true
                         print("\nReload Data Successful!\n")
                         completion?(isComplete)
                         
                         
                     } else {
-                        self.changeLabel.text = data
+                        print("Error when getting percent label data (not price label)")
                         let isComplete = false
                         print("\nReload Data Unsuccessful!\n")
                         completion?(isComplete)
@@ -422,8 +399,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 
                
             } else {
-                self.priceLabel.text = data
-                self.changeLabel.text = "Connection Issues"
+                self.priceLabel.text = "Price Unavailable"
+                self.fadeOutLabel(label: self.changeLabel)
                 let isComplete = false
                 print("\nReload Data Unsuccessful!\n")
                 completion?(isComplete)
@@ -433,6 +410,36 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
     }
 
+    
+    
+    
+    
+    /****************************************************************************/
+    //MARK: - Quick Fade Animations for Percent Label (for reload)
+    func fadeOutLabel(label: UILabel) {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
+            label.alpha = 0
+        }) { finished in
+            if finished {
+                label.text = ""
+                label.alpha = 1
+            }
+        }
+    }
+    func fadeInLabel(label: UILabel) {
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseOut, animations: {
+            label.alpha = 1
+        }) { finished in
+            if finished {
+                label.alpha = 1
+            }
+        }
+    }
+    
+    
+    
+    
+    
     /****************************************************************************/
     //MARK: - Spin animation
     
@@ -467,6 +474,70 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         animating = false
     }
  
+    
+    
+    
+    
+    /****************************************************************************/
+    //MARK: - Initial Bitcoin Animation Functions
+    
+    func animateBitcoin() {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.timingFunction = CAMediaTimingFunction(name: "easeIn")
+        rotateAnimation.fromValue = CGFloat.pi
+        rotateAnimation.toValue = 0
+        rotateAnimation.isAdditive = true
+        
+        rotateAnimation.duration = 2.0
+        
+        
+        let duration : Double = 0.25
+        let delay : Double = duration / 2
+        UIView.animate(withDuration: 2, delay: 0.0, options: .curveEaseIn, animations: {
+            
+            self.bitcoin.frame.size.height = self.bitcoinHeight
+            self.bitcoin.frame.size.width = self.bitcoinWidth
+            self.bitcoin.frame.origin.x = self.bitcoinX
+            self.bitcoin.frame.origin.y = self.bitcoinY
+            
+            UIView.animate(withDuration: duration) { () -> Void in
+                self.bitcoin.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            }
+            
+            UIView.animate(withDuration: duration, delay: delay, options: .curveEaseIn, animations: { () -> Void in
+                self.bitcoin.transform = CGAffineTransform(rotationAngle: CGFloat.pi * 2.0)
+            }, completion: nil)
+            //            self.bitcoin.transform.rotated(by: 390)
+            //self.bitcoin.transform = CGAffineTransform(rotationAngle: (CGFloat.pi * 2))
+            
+        }){ finished in
+            if finished {
+                self.BTC.frame.origin.x = self.centerLocation
+                UIView.animate(withDuration: 2.5, delay: 0.4, usingSpringWithDamping: 0.5, initialSpringVelocity: 2, options: .curveEaseInOut, animations: { //(withDuration: 2, delay: 0.4, options: .curveEaseInOut, animations: {
+                    self.BTC.alpha = 1
+                    self.reloadButton.alpha = 1
+                    
+                    
+                }, completion: nil)
+                UIView.animate(withDuration: 2.5, delay: 0.65, usingSpringWithDamping: 0.5, initialSpringVelocity: 2, options: .curveEaseInOut, animations: { //(withDuration: 2, delay: 0.4, options: .curveEaseInOut, animations: {
+                    
+                    self.currencyPicker.alpha = 1
+                    
+                }, completion: { (completed: Bool) in
+                    if completed == true {
+                        self.arrow.isHidden = false
+                        
+                    }
+                })
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
     /****************************************************************************/
     //MARK: - Currency Icon Fade & Scale Animation
 
@@ -482,6 +553,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseInOut, animations: {
                 currentIcon.frame.origin.x = self.currencyLocationX
                 self.BTC.frame.origin.x =  self.btcLocationX
+                self.changeLabel.alpha = 1
             }, completion: nil)
             
         } else {
@@ -496,6 +568,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
    
     
+    
+    
+    
+    /****************************************************************************/
     //MARK: - Single Currency Icon Animation
     
     func singleCurrencyIconAnimation(currentIcon: UIImageView, previousIcon: UIImageView, row: Int, completion: (Bool, UIImageView) -> Void) {

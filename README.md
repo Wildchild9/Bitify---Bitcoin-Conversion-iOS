@@ -1,5 +1,5 @@
 # Bitify
-
+Bitify is a Bitcoin conversion app that converts 1 Bitcoin to over 20 different currencies! In the coming weeks, Bitify will adapt the functionality to show a bitcoin graph that displays the past week's Bitcoin prices.
 
 
 ## Notices

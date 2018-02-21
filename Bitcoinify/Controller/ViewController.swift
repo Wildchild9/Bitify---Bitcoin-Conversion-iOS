@@ -340,15 +340,30 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             currentDisplayRow = row
             currencySelected = currencySymbolsArray[row - 1]
             
-            currencyIconFadeScaleAnimation(currentRow: row)
-            
-            
+            totalCurrencyAnimation(currentRow: row)
+//            if IconAnimation.status.completed == true {
+//                currencyIconFadeScaleAnimation(currentRow: row) { isFinished in
+//                    if isFinished {
+//                        IconAnimation.status.completed = true
+//                    }
+//                }
+//            }
             updateInterfaceForPickerview(finalURL: finalURL, currencySelected: currencySelected)
         }
     }
     
     
-    
+    func totalCurrencyAnimation(currentRow row: Int, completion: ((Bool) -> Void)? = nil) {
+        if IconAnimation.status.completed == true {
+            currencyIconFadeScaleAnimation(currentRow: row) { isFinished in
+                if isFinished {
+                    IconAnimation.status.completed = true
+                }
+            }
+        }
+        let completed = true
+        completion?(completed)
+    }
     
     
     
@@ -649,7 +664,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 
     func currencyIconFadeScaleAnimation(currentRow: Int, completion: ((Bool) -> Void)? = nil) {
         let icons = [AUD, BRL, CAD, CNY, EUR, GBP, HKD, IDR, ILS, INR, JPY, MXN, NOK, NZD, PLN, RON, RUB, SEK, SGD, USD, ZAR]
-        
+        IconAnimation.status.completed = false
         let currentIcon = icons[currentRow - 1]!
         
         if BTC.frame.origin.x == centerLocation {

@@ -25,6 +25,10 @@ class CurrentRow {
     var number : Int = 0
     static let row = CurrentRow() // This is a singleton
 }
+class IconAnimation {
+    var completed : Bool = true
+    static let status = IconAnimation() // This is a singleton
+}
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, ScrollableGraphViewDataSource {
     
@@ -339,7 +343,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             currencyIconFadeScaleAnimation(currentRow: row)
             
             
-            
             updateInterfaceForPickerview(finalURL: finalURL, currencySelected: currencySelected)
         }
     }
@@ -644,7 +647,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 /****************************************************************************/
 //MARK: - Currency Icon Fade & Scale Animation
 
-    func currencyIconFadeScaleAnimation(currentRow: Int) {
+    func currencyIconFadeScaleAnimation(currentRow: Int, completion: ((Bool) -> Void)? = nil) {
         let icons = [AUD, BRL, CAD, CNY, EUR, GBP, HKD, IDR, ILS, INR, JPY, MXN, NOK, NZD, PLN, RON, RUB, SEK, SGD, USD, ZAR]
         
         let currentIcon = icons[currentRow - 1]!
@@ -662,8 +665,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }) { finished in
                 if finished {
                     ReloadState.reload.canReload = true
+                    let isFinished = true
+                    completion?(isFinished)
                 } else {
                     ReloadState.reload.canReload = true
+                    let isFinished = true
+                    completion?(isFinished)
                 }
             }
             
@@ -673,6 +680,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 if isSuccess {
                     IconState.lastIcon.icon = setIcon
                     IconState.lastIcon.iconRow = rowNumber
+                    let isFinished = true
+                    completion?(isFinished)
                 }
             }
         }

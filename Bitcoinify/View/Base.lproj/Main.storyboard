@@ -33,7 +33,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <pickerView contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="Ihf-PJ-EJ5">
-                                        <rect key="frame" x="0.0" y="451" width="375" height="216"/>
+                                        <rect key="frame" x="0.0" y="455" width="375" height="216"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="216" id="4Po-oi-o6M"/>
                                         </constraints>
@@ -268,7 +268,7 @@
                                             <constraint firstAttribute="height" constant="40.5" id="Rtm-0X-Co6"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="35"/>
-                                        <color key="textColor" red="0.96505707500000004" green="0.83238238099999995" blue="0.45481121540000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="textColor" red="0.0" green="0.98106676339999999" blue="0.57369142770000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kw6-vf-ZdF" userLabel="Bitcoin Container">
@@ -312,20 +312,22 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0HO-Is-exM" userLabel="Graph Container">
-                                        <rect key="frame" x="0.0" y="247" width="375" height="225"/>
+                                        <rect key="frame" x="0.0" y="256" width="375" height="202"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWU-Op-t33" userLabel="Graph" customClass="ScrollableGraphView" customModule="ScrollableGraphView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="188"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAdaptRange" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAnimateOnAdapt" value="YES"/>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAnimateOnStartup" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="backgroundColor" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                        <color key="value" red="0.99999600649999998" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ed6-xi-89t" userLabel="Dates (x-axis)">
-                                                <rect key="frame" x="2" y="200" width="371" height="25"/>
+                                                <rect key="frame" x="2" y="177" width="371" height="25"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ai8-YJ-wQo" userLabel="Date1">
                                                         <rect key="frame" x="0.0" y="0.0" width="49.5" height="25"/>
@@ -375,7 +377,6 @@
                                                 </constraints>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="aWU-Op-t33" firstAttribute="top" secondItem="0HO-Is-exM" secondAttribute="top" id="Cr6-AE-lSr"/>
                                             <constraint firstItem="aWU-Op-t33" firstAttribute="leading" secondItem="0HO-Is-exM" secondAttribute="leading" id="EvM-Lv-9Sv"/>
@@ -397,7 +398,6 @@
                                     <constraint firstItem="n8n-ir-AUN" firstAttribute="centerY" secondItem="Q1j-Lh-Eyw" secondAttribute="centerY" id="2cm-7u-BOW"/>
                                     <constraint firstAttribute="trailing" secondItem="n8n-ir-AUN" secondAttribute="trailing" constant="12.5" id="3tT-dG-N9k"/>
                                     <constraint firstItem="n8n-ir-AUN" firstAttribute="leading" secondItem="Q1j-Lh-Eyw" secondAttribute="trailing" constant="7.5" id="Gul-53-TbM"/>
-                                    <constraint firstItem="Ihf-PJ-EJ5" firstAttribute="top" secondItem="0HO-Is-exM" secondAttribute="bottom" constant="-21" id="I1N-zL-TGo"/>
                                     <constraint firstItem="kw6-vf-ZdF" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="LxU-2R-d98"/>
                                     <constraint firstItem="kw6-vf-ZdF" firstAttribute="top" secondItem="dq2-zT-8TP" secondAttribute="top" id="NsP-vO-y3l"/>
                                     <constraint firstAttribute="trailing" secondItem="kw6-vf-ZdF" secondAttribute="trailing" id="PYe-tU-S2k"/>
@@ -406,11 +406,12 @@
                                     <constraint firstItem="0Cc-Ja-nJS" firstAttribute="centerX" secondItem="dq2-zT-8TP" secondAttribute="centerX" id="Vpg-AS-IqL"/>
                                     <constraint firstAttribute="trailing" secondItem="Ihf-PJ-EJ5" secondAttribute="trailing" id="Whg-rV-vLq"/>
                                     <constraint firstItem="Q1j-Lh-Eyw" firstAttribute="top" secondItem="kw6-vf-ZdF" secondAttribute="bottom" constant="-20" id="agz-56-BIf"/>
-                                    <constraint firstItem="0HO-Is-exM" firstAttribute="top" secondItem="0Cc-Ja-nJS" secondAttribute="bottom" constant="10" id="bXZ-uD-QlK"/>
+                                    <constraint firstItem="0HO-Is-exM" firstAttribute="top" secondItem="0Cc-Ja-nJS" secondAttribute="bottom" constant="19" id="bXZ-uD-QlK"/>
                                     <constraint firstItem="0Cc-Ja-nJS" firstAttribute="top" secondItem="Q1j-Lh-Eyw" secondAttribute="bottom" constant="15" id="df5-rQ-VdE"/>
+                                    <constraint firstItem="Ihf-PJ-EJ5" firstAttribute="top" secondItem="0HO-Is-exM" secondAttribute="bottom" constant="-3" id="eCs-PR-un6"/>
                                     <constraint firstItem="0HO-Is-exM" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="kFt-dd-FhI"/>
                                     <constraint firstItem="Ihf-PJ-EJ5" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="mv6-I2-e8P"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ihf-PJ-EJ5" secondAttribute="bottom" id="qIE-mk-HMf"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ihf-PJ-EJ5" secondAttribute="bottom" constant="-4" id="qIE-mk-HMf"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -452,6 +453,7 @@
                         <outlet property="ZAR" destination="adB-fC-eYZ" id="y8z-7i-OYi"/>
                         <outlet property="arrow" destination="ew1-GC-ueG" id="qTm-Ci-lUD"/>
                         <outlet property="bitcoin" destination="FWc-o8-7aH" id="j0a-Va-dJu"/>
+                        <outlet property="bitcoinLogoContainer" destination="kw6-vf-ZdF" id="SEs-2u-wcw"/>
                         <outlet property="changeLabel" destination="n8n-ir-AUN" id="8P4-6T-Ksh"/>
                         <outlet property="currencyIconContainer" destination="Q1j-Lh-Eyw" id="fxn-vw-xV1"/>
                         <outlet property="currencyPicker" destination="Ihf-PJ-EJ5" id="AFV-qY-ogP"/>
@@ -464,6 +466,7 @@
                         <outlet property="dateLabel7" destination="LV3-oJ-9LU" id="hls-NT-NxS"/>
                         <outlet property="dateStack" destination="ed6-xi-89t" id="hEA-Cb-x3B"/>
                         <outlet property="graph" destination="aWU-Op-t33" id="4yB-LM-2de"/>
+                        <outlet property="graphContainer" destination="0HO-Is-exM" id="lwO-Iu-qdX"/>
                         <outlet property="priceLabel" destination="0Cc-Ja-nJS" id="eGW-1K-AYw"/>
                         <outlet property="reloadButton" destination="cqK-cY-ega" id="ElS-Sk-E5t"/>
                     </connections>

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0F4493E8B324AA2175B98BAD /* Pods_Bitify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 958CE84F2CCDC6F5E178940B /* Pods_Bitify.framework */; };
+		C251C6AF203CDE30003465C7 /* BitcoinDateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C251C6AE203CDE30003465C7 /* BitcoinDateData.swift */; };
+		C251C6B1203CDE52003465C7 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C251C6B0203CDE52003465C7 /* Dates.swift */; };
 		C29FB9AC2036D069005AC780 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FB9AB2036D069005AC780 /* AppDelegate.swift */; };
 		C29FB9AE2036D069005AC780 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FB9AD2036D069005AC780 /* ViewController.swift */; };
 		C29FB9B12036D069005AC780 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C29FB9AF2036D069005AC780 /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 		04A541170A23CDA06A8CBD6C /* Pods-Bitify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bitify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bitify/Pods-Bitify.debug.xcconfig"; sourceTree = "<group>"; };
 		958CE84F2CCDC6F5E178940B /* Pods_Bitify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bitify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD078B7DA934820AFBA7CA01 /* Pods-Bitify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bitify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bitify/Pods-Bitify.release.xcconfig"; sourceTree = "<group>"; };
+		C251C6AE203CDE30003465C7 /* BitcoinDateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinDateData.swift; sourceTree = "<group>"; };
+		C251C6B0203CDE52003465C7 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		C29FB9A82036D069005AC780 /* Bitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29FB9AB2036D069005AC780 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C29FB9AD2036D069005AC780 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				C29FB9BD2036D28C005AC780 /* Bitcoin Data Model.swift */,
+				C251C6AE203CDE30003465C7 /* BitcoinDateData.swift */,
+				C251C6B0203CDE52003465C7 /* Dates.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,7 +274,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C29FB9BE2036D28C005AC780 /* Bitcoin Data Model.swift in Sources */,
+				C251C6AF203CDE30003465C7 /* BitcoinDateData.swift in Sources */,
 				C29FB9AE2036D069005AC780 /* ViewController.swift in Sources */,
+				C251C6B1203CDE52003465C7 /* Dates.swift in Sources */,
 				C29FB9AC2036D069005AC780 /* AppDelegate.swift in Sources */,
 				C2D4ECF02036D44E0066FF97 /* Extensions.swift in Sources */,
 			);

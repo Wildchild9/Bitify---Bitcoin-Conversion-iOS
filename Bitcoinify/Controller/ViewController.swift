@@ -26,7 +26,7 @@ class CurrentRow {
     static let row = CurrentRow() // This is a singleton
 }
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, ScrollableGraphViewDataSource {
     
     
 /***********************************************/
@@ -112,8 +112,25 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var changeLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel! /////////////////////////
     @IBOutlet weak var bitcoin: UIImageView!
+    @IBOutlet weak var bitcoinLogoContainer: UIView!
     
-//TODO - Graph @IBOutlets
+//TODO - Graph Values & @IBOutlets
+    
+    let dates = Dates()
+    let graphBaseURL = "https://api.coindesk.com/v1/bpi/historical/close.json?start="
+    let midURL = "&end="
+    let format = DateFormatter()
+    var numberOfDates : Int = 0
+    var arrayOfDates : [String] = []
+    var valuesArray : [Double] = []
+    let yesterday = Calendar.current.date(byAdding: .day, value: 0, to: Date())
+    let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date())
+    let weekAgoDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())
+    var priceNow : Double = 0
+    var quarter1 : Double = 0
+    var half : Double = 0
+    var quarter3 : Double = 0
+    var whole : Double = 0
     
     @IBOutlet weak var graph: ScrollableGraphView!
     @IBOutlet weak var dateStack: UIStackView!
@@ -124,7 +141,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var dateLabel5: UILabel!
     @IBOutlet weak var dateLabel6: UILabel!
     @IBOutlet weak var dateLabel7: UILabel!
- 
+    @IBOutlet weak var graphContainer: UIView!
     
     
     
@@ -133,7 +150,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        bitcoin.center = bitcoinLogoContainer.center
+        dateLabel1.alpha = 0
+        dateLabel2.alpha = 0
+        dateLabel3.alpha = 0
+        dateLabel4.alpha = 0
+        dateLabel5.alpha = 0
+        dateLabel6.alpha = 0
+        dateLabel7.alpha = 0
+        priceLabel.textColor = .mint
+        graph.isHidden = true
         
         bitcoinHeight = bitcoin.frame.size.height
         bitcoinWidth = bitcoin.frame.size.width
@@ -243,7 +269,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-       
+        
         bitcoin.frame.size = CGSize(width: 175, height: 175)
         bitcoin.center = view.center
         animateBitcoin()
@@ -324,10 +350,34 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     
+/***************************************************************/
+//MARK: - ScrollableGraphView Data Source Methods
+    
+    
+    func value(forPlot plot: Plot, atIndex pointIndex: Int) -> Double { // Final Values
+        return valuesArray[pointIndex]
+    }
+    
+    func label(atIndex pointIndex: Int) -> String { // x-axis labels
+        
+        // We return a value at all because the current setup of the date labels need the space that is otherwise given to our (blank) labels
+        
+        return " "
+    }
+    
+    func numberOfPoints() -> Int { // Number of data points on graph
+        
+        return numberOfDates
+    }
+    
+    
+    
+    
+    
     //TODO: - Consider integrating the pod 'PKHUD' to deal with errors on the UI's front
     
     
-    
+
     
 /***************************************************************/
 //MARK: - Update User Interface for UIPickerView Function
@@ -466,22 +516,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 
     
 /****************************************************************************/
-//MARK: - Graph
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-/****************************************************************************/
 //MARK: - Quick Fade Animations for Percent Label (for reload)
     func fadeOutLabel(label: UILabel) {
         UIView.animate(withDuration: 0.4, delay: 0.0, options: .curveEaseIn, animations: {
@@ -546,7 +580,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
 /****************************************************************************/
-//MARK: - Initial Bitcoin Animation Functions
+//MARK: - Initial Bitcoin Animation (Initialize Items to Appear After Bitcoin Animation [betwees *s])
     
     func animateBitcoin() {
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
@@ -580,6 +614,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }){ finished in
             if finished {
                 self.BTC.frame.origin.x = self.centerLocation
+                self.setupGraph()
                 UIView.animate(withDuration: 2.5, delay: 0.4, usingSpringWithDamping: 0.5, initialSpringVelocity: 2, options: .curveEaseInOut, animations: { //(withDuration: 2, delay: 0.4, options: .curveEaseInOut, animations: {
                     self.BTC.alpha = 1
                     self.reloadButton.alpha = 1
@@ -591,10 +626,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                     self.currencyPicker.alpha = 1
                     
                 }, completion: { (completed: Bool) in
+ //********************
                     if completed == true {
                         self.arrow.isHidden = false
                         
                     }
+ //********************
                 })
             }
         }
@@ -701,6 +738,224 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 //MARK: - Graph Section
     
     
+    func setupGraph() {
+        graph.frame.origin = graphContainer.frame.origin
+        dateLabel1.alpha = 0
+        dateLabel2.alpha = 0
+        dateLabel3.alpha = 0
+        dateLabel4.alpha = 0
+        dateLabel5.alpha = 0
+        dateLabel6.alpha = 0
+        dateLabel7.alpha = 0
+        graph.isHidden = true
+        let graphFinalURL = graphBaseURL + (weekAgoDate?.formattedDate())! + midURL + (yesterday?.formattedDate())!
+        Dates.getDatesBetweenInterval(weekAgoDate!, yesterday!) { (finished, datesArray) in
+            if finished {
+                numberOfDates = datesArray.count + 1
+                arrayOfDates = datesArray
+                arrayOfDates.append(Date().formattedDate())
+                print(datesArray)
+                
+                getBitcoinDateArrayData(url: graphFinalURL, dates: datesArray) { (isSuccess, datesValueArray) in
+                    if isSuccess {
+                        getBitcoinCurrentData { (isCompleted, currentPrice) in
+                            if isCompleted {
+                                self.graph.frame.origin = self.graphContainer.frame.origin
+                                self.valuesArray = datesValueArray
+                            
+                                print("valuesArray without current price --> \(self.valuesArray)\n")
+                                self.valuesArray.append(currentPrice)
+                                print("valuesArray with current price --> \(self.valuesArray)\n")
+                                self.quarter1 = self.valuesArray.max()! * 0.25
+                                self.half = self.valuesArray.max()! * 0.5
+                                self.quarter3 = self.valuesArray.max()! * 0.75
+                                self.whole = self.valuesArray.max()!
+                                print(self.whole)
+                                
+                                self.makeGraphView(graph: self.graph)
+                                self.graph.frame.origin = self.graphContainer.frame.origin
+                                self.graphContainer.bringSubview(toFront: self.graph)
+                                self.graphContainer.bringSubview(toFront: self.dateStack)
+                                
+                                self.dateLabel1.text = self.arrayOfDates[0].monthDay()
+                                self.dateLabel2.text = self.arrayOfDates[1].monthDay()
+                                self.dateLabel3.text = self.arrayOfDates[2].monthDay()
+                                self.dateLabel4.text = self.arrayOfDates[3].monthDay()
+                                self.dateLabel5.text = self.arrayOfDates[4].monthDay()
+                                self.dateLabel6.text = self.arrayOfDates[5].monthDay()
+                                self.dateLabel7.text = self.arrayOfDates[6].monthDay()
+                                
+                                self.datesBuildAnimationWithDelay(delay: 0.2, animationOption: .curveEaseInOut, singleAnimationDuration: 1.0)
+                                
+                            } else {
+                                print("Graph failed to load data")
+                            }
+                            
+                            
+                        }
+                        
+                    } else {
+                        print("Graph failed to load data")
+                    }
+                }
+                
+                
+                
+            }
+            
+        }
+    }
+    
+    func datesBuildAnimationWithDelay(delay: Double, animationOption: UIViewAnimationOptions, singleAnimationDuration: Double) {
+        var startPause : Double = 0.0
+        if delay > 0.75 {
+            startPause = 0.75
+        }
+        UIView.animate(withDuration: singleAnimationDuration, delay: startPause, options: animationOption, animations: {
+            self.dateLabel1.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: singleAnimationDuration, delay: startPause + delay, options: animationOption, animations: {
+            self.dateLabel2.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: singleAnimationDuration, delay: startPause + (2 * delay), options: animationOption, animations: {
+            self.dateLabel3.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: singleAnimationDuration, delay: startPause + (3 * delay), options: animationOption, animations: {
+            self.dateLabel4.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: singleAnimationDuration, delay: startPause + (4 * delay), options: animationOption, animations: {
+            self.dateLabel5.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: singleAnimationDuration, delay: startPause + (5 * delay), options: animationOption, animations: {
+            self.dateLabel6.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: singleAnimationDuration, delay: startPause + (6 * delay), options: animationOption, animations: {
+            self.dateLabel7.alpha = 1
+        }, completion: nil)
+    }
+    
+    func bringDateLabelsToFront() {
+        dateLabel1.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateLabel1)
+        dateLabel2.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateLabel2)
+        dateLabel3.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateLabel3)
+        dateLabel4.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateLabel4)
+        dateLabel5.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateLabel5)
+        dateLabel6.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateLabel6)
+        dateLabel7.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateLabel7)
+    }
+    
+    // Mark: - Make Graph Functions
+    
+    func makeGraphView(graph: ScrollableGraphView!) {
+        let graphView = ScrollableGraphView(frame: graph.frame, dataSource: self as ScrollableGraphViewDataSource)
+        
+        let linePlot = LinePlot(identifier: "linePlot")
+        let dotPlot = DotPlot(identifier: "dotPlot")
+        let referenceLines = ReferenceLines()
+        
+        setupLinePlot(linePlot: linePlot, backgroundColour: .blackberry, lineColour: .mint)
+        setupDotPlot(dotPlot: dotPlot, dataPointColour: .white)
+        setupReferenceLines(referenceLines: referenceLines, dataPointColour: .white, referenceLineColour: .strawberry)
+        setGraphViewAttributes(graphView: graphView)
+        graphView.isUserInteractionEnabled = false
+        
+        finalizeGraph(graphView: graphView, linePlot: linePlot, dotPlot: dotPlot, referenceLines: referenceLines)
+    }
+    
+    func setupLinePlot(linePlot: LinePlot, backgroundColour: UIColor, lineColour: UIColor) {
+        linePlot.lineColor = lineColour // Line colour
+        linePlot.lineWidth = 1.25 // Line width
+        linePlot.lineStyle = ScrollableGraphViewLineStyle.smooth // Line Type
+        linePlot.shouldFill = true // Line with fill? (Bool)
+        linePlot.fillType = .gradient // Fill type
+        linePlot.fillGradientStartColor = lineColour // Top gradient colour
+        linePlot.fillGradientEndColor = backgroundColour // Bottom gradient colour
+        linePlot.adaptAnimationType = .elastic // Line animation
+        
+        
+    }
+    
+    func setupDotPlot(dotPlot: DotPlot, dataPointColour: UIColor) {
+        dotPlot.dataPointSize = 2 // Dot size (norm 2)
+        dotPlot.dataPointFillColor = dataPointColour // Dot colour
+        dotPlot.adaptAnimationType = ScrollableGraphViewAnimationType.elastic // Dot animation
+    }
+    
+    func setupReferenceLines(referenceLines: ReferenceLines, dataPointColour: UIColor, referenceLineColour: UIColor) {
+        
+        referenceLines.referenceLineColor = referenceLineColour.withAlphaComponent(0.2) // Colour and opacity of reference lines
+        referenceLines.dataPointLabelColor = dataPointColour // Colour of x-axis labels
+        referenceLines.referenceLineLabelColor = referenceLineColour // Colour of y-axis labels
+        referenceLines.dataPointLabelFont = UIFont(name: "Futura-Medium", size: 12) // Font of x-axis labels
+        referenceLines.referenceLineLabelFont = UIFont(name: "HelveticaNeue-CondensedBold", size: 12)! // Font of y-axis labels
+        // HelveticaNeue-Medium
+        
+        
+        // To utilize referenceLines.positionType, make sure that graphView.shouldAdaptRange is false
+        referenceLines.positionType = .absolute // If type specidied, set referenceLines.includeMinMax to false
+        referenceLines.absolutePositions = [0.0,quarter1,half,quarter3,whole]//[0,0.5,1]
+        referenceLines.positionType = .absolute
+        // absolute positions can be and number that fits within your data set
+        // relative positions have to be a value from 0-1 (like percents)
+        
+        referenceLines.includeMinMax = false // Show min and max reference lines? (Bool)
+        referenceLines.referenceLinePosition = .left // Position of y-axis labels
+        referenceLines.referenceLineNumberStyle = NumberFormatter.Style.currency
+        referenceLines.shouldShowLabels = true // Show y-axis labels? (Bool)    *******
+        referenceLines.shouldShowReferenceLines = true // Show refernce lines? (Bool)
+    }
+    
+    func setGraphViewAttributes(graphView: ScrollableGraphView) {
+        graphView.backgroundFillColor = .clear // Background colour (above)
+        graphView.backgroundColor = .clear // Background colour (below)
+        graphView.rightmostPointPadding = 0 // CGFloat(valuesArray.last!)// Right spring padding space // 25
+        graphView.leftmostPointPadding = 0 // Left spring padding space // 50
+        
+        graphView.rangeMax = whole // Sets the maximum value for the y-axis (essential to have, if deleted or commented out graph will most likely be incorrect)
+        
+        
+        graphView.bottomMargin = 1 // Space between bottom edge of graph and x-axis
+        graphView.shouldRangeAlwaysStartAtZero = true // Y-axis start at zero? (Bool)
+        graphView.dataPointSpacing = graph.frame.size.width / CGFloat(valuesArray.count - 1)
+        graphView.shouldAdaptRange = false // Should abide by minimum and maximum user-set values for y-axis
+        // If false, this also ensures that the y-axis values will not change while in use
+        
+        //        if graphView.shouldAdaptRange == true {
+        //            graphView.rangeMax = value // Max value for y-axis
+        //            graphView.range = value // Min value for y-axis
+        //        }
+        graphView.shouldAnimateOnAdapt = true // Should utilize animations while using graph? (Bool)
+        graphView.shouldAnimateOnStartup = true // Should animate building of graph? (Bool)
+    }
+    
+    func finalizeGraph(graphView: ScrollableGraphView, linePlot: LinePlot?, dotPlot: DotPlot?, referenceLines: ReferenceLines?) {
+        if linePlot != nil { // Only runs if a linePlot is set for the graph
+            graphView.addPlot(plot: linePlot!)
+        }
+        if dotPlot != nil { // Only runs if a dotPlot is set for the graph
+            graphView.addPlot(plot: dotPlot!)
+        }
+        if referenceLines != nil { // Only runs if referenceLines are set for the graph
+            graphView.addReferenceLines(referenceLines: referenceLines!)
+        }
+        self.view.addSubview(graphView) // Implement the graph
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -725,581 +980,23 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 
 
 
-//func setIconVariable() -> UIImageView {
-//    if AUD.isHidden == false {
-//        print("Previous Icon: AUD\n")
-//        return AUD
-//    } else if BRL.isHidden == false {
-//        print("Previous Icon: BRL\n")
-//        return BRL
-//    } else if CAD.isHidden == false {
-//        print("Previous Icon: CAD\n")
-//        return CAD
-//    } else if CNY.isHidden == false {
-//        print("Previous Icon: CNY\n")
-//        return CNY
-//    } else if EUR.isHidden == false {
-//        print("Previous Icon: EUR\n")
-//        return EUR
-//    } else if GBP.isHidden == false {
-//        print("Previous Icon: GBP\n")
-//        return GBP
-//    } else if HKD.isHidden == false {
-//        print("Previous Icon: HKD\n")
-//        return HKD
-//    } else if IDR.isHidden == false {
-//        print("Previous Icon: IDR\n")
-//        return IDR
-//    } else if ILS.isHidden == false {
-//        print("Previous Icon: ILS\n")
-//        return ILS
-//    } else if INR.isHidden == false {
-//        print("Previous Icon: INR\n")
-//        return INR
-//    } else if JPY.isHidden == false {
-//        print("Previous Icon: JPY\n")
-//        return JPY
-//    } else if MXN.isHidden == false {
-//        print("Previous Icon: MXN\n")
-//        return MXN
-//    } else if NOK.isHidden == false {
-//        print("Previous Icon: NOK\n")
-//        return NOK
-//    } else if NZD.isHidden == false {
-//        print("Previous Icon: NZD\n")
-//        return NZD
-//    } else if PLN.isHidden == false {
-//        print("Previous Icon: PLN\n")
-//        return PLN
-//    } else if RON.isHidden == false {
-//        print("Previous Icon: RON\n")
-//        return RON
-//    } else if RUB.isHidden == false {
-//        print("Previous Icon: RUB\n")
-//        return RUB
-//    } else if SEK.isHidden == false {
-//        print("Previous Icon: SEK\n")
-//        return SEK
-//    } else if SGD.isHidden == false {
-//        print("Previous Icon: SGD\n")
-//        return SGD
-//    } else if USD.isHidden == false {
-//        print("Previous Icon: USD\n")
-//        return USD
-//    } else {
-//        print("Previous Icon: ZAR\n")
-//        return ZAR
-//    }
-//}
 
-/*
- 
- if AUD.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.AUD.frame.size.width -= 50
- self.AUD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.AUD.frame.origin.y -= 30
- self.AUD.frame.origin.x += 25
- self.AUD.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.AUD.frame.origin.x = self.smallX
- self.AUD.frame.origin.y = self.smallY
- }
- }
- 
- } else if BRL.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.BRL.frame.size.width -= 50
- self.BRL.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.BRL.frame.origin.y -= 30
- self.BRL.frame.origin.x += 25
- self.BRL.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.BRL.frame.origin.x = self.smallX
- self.BRL.frame.origin.y = self.smallY
- }
- }
- 
- } else if CAD.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.CAD.frame.size.width -= 50
- self.CAD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.CAD.frame.origin.y -= 30
- self.CAD.frame.origin.x += 25
- self.CAD.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.CAD.frame.origin.x = self.smallX
- self.CAD.frame.origin.y = self.smallY
- }
- }
- 
- } else if CNY.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.CNY.frame.size.width -= 50
- self.CNY.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.CNY.frame.origin.y -= 30
- self.CNY.frame.origin.x += 25
- self.CNY.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.CNY.frame.origin.x = self.smallX
- self.CNY.frame.origin.y = self.smallY
- }
- }
- 
- } else if EUR.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.EUR.frame.size.width -= 50
- self.EUR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.EUR.frame.origin.y -= 30
- self.EUR.frame.origin.x += 25
- self.EUR.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.EUR.frame.origin.x = self.smallX
- self.EUR.frame.origin.y = self.smallY
- }
- }
- 
- } else if GBP.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.GBP.frame.size.width -= 50
- self.GBP.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.GBP.frame.origin.y -= 30
- self.GBP.frame.origin.x += 25
- self.GBP.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.GBP.frame.origin.x = self.smallX
- self.GBP.frame.origin.y = self.smallY
- }
- }
- 
- } else if HKD.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.HKD.frame.size.width -= 50
- self.HKD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.HKD.frame.origin.y -= 30
- self.HKD.frame.origin.x += 25
- self.HKD.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.HKD.frame.origin.x = self.smallX
- self.HKD.frame.origin.y = self.smallY
- }
- }
- 
- } else if IDR.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.IDR.frame.size.width -= 50
- self.IDR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.IDR.frame.origin.y -= 30
- self.IDR.frame.origin.x += 25
- self.IDR.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.IDR.frame.origin.x = self.smallX
- self.IDR.frame.origin.y = self.smallY
- }
- }
- 
- } else if ILS.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.ILS.frame.size.width -= 50
- self.ILS.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.ILS.frame.origin.y -= 30
- self.ILS.frame.origin.x += 25
- self.ILS.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.ILS.frame.origin.x = self.smallX
- self.ILS.frame.origin.y = self.smallY
- }
- }
- 
- } else if INR.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.INR.frame.size.width -= 50
- self.INR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.INR.frame.origin.y -= 30
- self.INR.frame.origin.x += 25
- self.INR.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.INR.frame.origin.x = self.smallX
- self.INR.frame.origin.y = self.smallY
- }
- }
- 
- } else if JPY.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.JPY.frame.size.width -= 50
- self.JPY.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.JPY.frame.origin.y -= 30
- self.JPY.frame.origin.x += 25
- self.JPY.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.JPY.frame.origin.x = self.smallX
- self.JPY.frame.origin.y = self.smallY
- }
- }
- 
- } else if MXN.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.MXN.frame.size.width -= 50
- self.MXN.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.MXN.frame.origin.y -= 30
- self.MXN.frame.origin.x += 25
- self.MXN.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.MXN.frame.origin.x = self.smallX
- self.MXN.frame.origin.y = self.smallY
- }
- }
- 
- } else if NOK.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.NOK.frame.size.width -= 50
- self.NOK.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.NOK.frame.origin.y -= 30
- self.NOK.frame.origin.x += 25
- self.NOK.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.NOK.frame.origin.x = self.smallX
- self.NOK.frame.origin.y = self.smallY
- }
- }
- 
- } else if NZD.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.NZD.frame.size.width -= 50
- self.NZD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.NZD.frame.origin.y -= 30
- self.NZD.frame.origin.x += 25
- self.NZD.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.NZD.frame.origin.x = self.smallX
- self.NZD.frame.origin.y = self.smallY
- }
- }
- 
- } else if PLN.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.PLN.frame.size.width -= 50
- self.PLN.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.PLN.frame.origin.y -= 30
- self.PLN.frame.origin.x += 25
- self.PLN.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.PLN.frame.origin.x = self.smallX
- self.PLN.frame.origin.y = self.smallY
- }
- }
- 
- } else if RON.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.RON.frame.size.width -= 50
- self.RON.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.RON.frame.origin.y -= 30
- self.RON.frame.origin.x += 25
- self.RON.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.RON.frame.origin.x = self.smallX
- self.RON.frame.origin.y = self.smallY
- }
- }
- 
- } else if RUB.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.RUB.frame.size.width -= 50
- self.RUB.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.RUB.frame.origin.y -= 30
- self.RUB.frame.origin.x += 25
- self.RUB.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.RUB.frame.origin.x = self.smallX
- self.RUB.frame.origin.y = self.smallY
- }
- }
- 
- } else if SEK.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.SEK.frame.size.width -= 50
- self.SEK.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.SEK.frame.origin.y -= 30
- self.SEK.frame.origin.x += 25
- self.SEK.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.SEK.frame.origin.x = self.smallX
- self.SEK.frame.origin.y = self.smallY
- }
- }
- 
- } else if SGD.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.SGD.frame.size.width -= 50
- self.SGD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.SGD.frame.origin.y -= 30
- self.SGD.frame.origin.x += 25
- self.SGD.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.SGD.frame.origin.x = self.smallX
- self.SGD.frame.origin.y = self.smallY
- }
- }
- 
- } else if USD.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.USD.frame.size.width -= 50
- self.USD.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.USD.frame.origin.y -= 30
- self.USD.frame.origin.x += 25
- self.USD.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.USD.frame.origin.x = self.smallX
- self.USD.frame.origin.y = self.smallY
- }
- }
- 
- } else if ZAR.isHidden == false {
- icons[currentRow - 1]?.frame.size.width = currencyWidth - 50
- icons[currentRow - 1]?.frame.size.height = currencyHeight - (50 * (currencyHeight / currencyWidth))
- icons[currentRow - 1]?.frame.origin.y = currencyLocationY - 30
- icons[currentRow - 1]?.frame.origin.x = currencyLocationX + 25
- icons[currentRow - 1]?.alpha = 0.0
- UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
- self.ZAR.frame.size.width -= 50
- self.ZAR.frame.size.height -= 50 * (self.btcHeight / self.btcWidth)
- self.ZAR.frame.origin.y -= 30
- self.ZAR.frame.origin.x += 25
- self.ZAR.alpha = 0.0
- icons[currentRow - 1]?.frame.size.width += 50
- icons[currentRow - 1]?.frame.size.height += 50 * (self.btcHeight / self.btcWidth)
- icons[currentRow - 1]?.frame.origin.y += 30
- icons[currentRow - 1]?.frame.origin.x -= 25
- icons[currentRow - 1]?.alpha = 1.0
- }) { finished in
- if finished {
- self.ZAR.frame.origin.x = self.smallX
- self.ZAR.frame.origin.y = self.smallY
- }
- }
- 
- }
- 
- 
- 
-*/
+
+//  func finalGraphInitialization(datesValueArray: [Double]) {
+//      getBitcoinCurrentData{ (isCompleted, currentPrice) in
+//         if isCompleted {
+//            self.valuesArray = datesValueArray
+//            self.valuesArray.append(currentPrice)
+//            print(self.valuesArray)
+//            self.quarter1 = self.valuesArray.max()! * 0.25
+//            self.half = self.valuesArray.max()! * 0.5
+//            self.quarter3 = self.valuesArray.max()! * 0.75
+//            self.whole = self.valuesArray.max()!
+//            self.makeGraphView(graph: self.graph)
+//         } else {
+//            print("Graph failed to load data")
+//         }
+//
+//      }
+//  }
+

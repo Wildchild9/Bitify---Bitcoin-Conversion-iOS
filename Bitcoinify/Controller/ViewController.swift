@@ -321,7 +321,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return currencyArray[row]
     }
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let attributedString = NSAttributedString(string: currencyArray[row], attributes: [NSAttributedStringKey.foregroundColor : UIColor.white])
+        let attributedString = NSAttributedString(string: currencyArray[row], attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         return attributedString
     }
     

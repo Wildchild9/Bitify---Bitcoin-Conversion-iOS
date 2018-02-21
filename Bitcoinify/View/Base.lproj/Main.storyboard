@@ -263,7 +263,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Cc-Ja-nJS">
-                                        <rect key="frame" x="147" y="196.5" width="80" height="40.5"/>
+                                        <rect key="frame" x="147" y="202.5" width="80" height="40.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40.5" id="Rtm-0X-Co6"/>
                                         </constraints>
@@ -311,107 +311,98 @@
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0HO-Is-exM" userLabel="Graph Container">
-                                        <rect key="frame" x="0.0" y="256" width="375" height="202"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fs-lk-ILw" userLabel="Container">
+                                        <rect key="frame" x="0.0" y="279" width="375" height="173"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWU-Op-t33" userLabel="Graph" customClass="ScrollableGraphView" customModule="ScrollableGraphView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="188"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAdaptRange" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAnimateOnAdapt" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAnimateOnStartup" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                                        <color key="value" red="0.99999600649999998" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ed6-xi-89t" userLabel="Dates (x-axis)">
-                                                <rect key="frame" x="2" y="177" width="371" height="25"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="sFV-Ld-Lyj" userLabel="Dates (x-axis)">
+                                                <rect key="frame" x="0.0" y="153" width="375" height="20"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ai8-YJ-wQo" userLabel="Date1">
-                                                        <rect key="frame" x="0.0" y="0.0" width="49.5" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iI0-tp-BxJ" userLabel="Date1">
+                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y63-Z2-DVy" userLabel="Date2">
-                                                        <rect key="frame" x="53.5" y="0.0" width="49.5" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GgG-OI-p6Z" userLabel="Date2">
+                                                        <rect key="frame" x="54" y="0.0" width="50.5" height="20"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgA-O1-vS3" userLabel="Date3">
-                                                        <rect key="frame" x="107" y="0.0" width="49.5" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUX-6K-MMb" userLabel="Date3">
+                                                        <rect key="frame" x="108.5" y="0.0" width="50" height="20"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUP-kh-4dH" userLabel="Date4">
-                                                        <rect key="frame" x="160.5" y="0.0" width="50" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxe-bP-e5s" userLabel="Date4">
+                                                        <rect key="frame" x="162.5" y="0.0" width="50" height="20"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPi-Zg-nLY" userLabel="Date5">
-                                                        <rect key="frame" x="214.5" y="0.0" width="49.5" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hxr-Hj-SF9" userLabel="Date5">
+                                                        <rect key="frame" x="216.5" y="0.0" width="50" height="20"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="225-7D-WVm" userLabel="Date6">
-                                                        <rect key="frame" x="268" y="0.0" width="49.5" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6a-of-hjP" userLabel="Date6">
+                                                        <rect key="frame" x="270.5" y="0.0" width="50.5" height="20"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LV3-oJ-9LU" userLabel="Date7">
-                                                        <rect key="frame" x="321.5" y="0.0" width="49.5" height="25"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date 7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5F-T7-OlQ" userLabel="Date7">
+                                                        <rect key="frame" x="325" y="0.0" width="50" height="20"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="25" id="3zY-ZK-2j1"/>
+                                                    <constraint firstAttribute="height" constant="20" id="AYQ-tr-I2g"/>
                                                 </constraints>
                                             </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rQ5-pD-dSR" customClass="ScrollableGraphView" customModule="ScrollableGraphView">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAdaptRange" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAnimateOnAdapt" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldAnimateOnStartup" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="aWU-Op-t33" firstAttribute="top" secondItem="0HO-Is-exM" secondAttribute="top" id="Cr6-AE-lSr"/>
-                                            <constraint firstItem="aWU-Op-t33" firstAttribute="leading" secondItem="0HO-Is-exM" secondAttribute="leading" id="EvM-Lv-9Sv"/>
-                                            <constraint firstItem="ed6-xi-89t" firstAttribute="top" secondItem="aWU-Op-t33" secondAttribute="bottom" constant="-11" id="g8M-up-5Wn"/>
-                                            <constraint firstItem="ed6-xi-89t" firstAttribute="leading" secondItem="0HO-Is-exM" secondAttribute="leading" constant="2" id="gd7-Y7-tQN"/>
-                                            <constraint firstAttribute="bottom" secondItem="ed6-xi-89t" secondAttribute="bottom" id="nZ0-cG-mmW"/>
-                                            <constraint firstAttribute="trailing" secondItem="ed6-xi-89t" secondAttribute="trailing" constant="2" id="pvL-mc-mQF"/>
-                                            <constraint firstAttribute="trailing" secondItem="aWU-Op-t33" secondAttribute="trailing" id="wi4-zY-G81"/>
+                                            <constraint firstItem="sFV-Ld-Lyj" firstAttribute="top" secondItem="rQ5-pD-dSR" secondAttribute="bottom" id="4oi-St-bdy"/>
+                                            <constraint firstItem="sFV-Ld-Lyj" firstAttribute="leading" secondItem="6fs-lk-ILw" secondAttribute="leading" id="ArI-Qr-Wc7"/>
+                                            <constraint firstAttribute="trailing" secondItem="sFV-Ld-Lyj" secondAttribute="trailing" id="TvS-Px-LDO"/>
+                                            <constraint firstItem="rQ5-pD-dSR" firstAttribute="top" secondItem="6fs-lk-ILw" secondAttribute="top" id="W1Z-d1-jMW"/>
+                                            <constraint firstItem="rQ5-pD-dSR" firstAttribute="leading" secondItem="6fs-lk-ILw" secondAttribute="leading" id="bCY-1Q-in8"/>
+                                            <constraint firstAttribute="trailing" secondItem="rQ5-pD-dSR" secondAttribute="trailing" id="epa-ZB-q26"/>
+                                            <constraint firstAttribute="bottom" secondItem="sFV-Ld-Lyj" secondAttribute="bottom" id="hpq-tR-GeG"/>
                                         </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                                <color key="value" red="1" green="0.52120530610000004" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.014280757870000001" green="0.0" blue="0.1081325635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="Ihf-PJ-EJ5" firstAttribute="top" secondItem="6fs-lk-ILw" secondAttribute="bottom" constant="3" id="0NB-kU-hzU"/>
                                     <constraint firstItem="n8n-ir-AUN" firstAttribute="centerY" secondItem="Q1j-Lh-Eyw" secondAttribute="centerY" id="2cm-7u-BOW"/>
                                     <constraint firstAttribute="trailing" secondItem="n8n-ir-AUN" secondAttribute="trailing" constant="12.5" id="3tT-dG-N9k"/>
                                     <constraint firstItem="n8n-ir-AUN" firstAttribute="leading" secondItem="Q1j-Lh-Eyw" secondAttribute="trailing" constant="7.5" id="Gul-53-TbM"/>
                                     <constraint firstItem="kw6-vf-ZdF" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="LxU-2R-d98"/>
                                     <constraint firstItem="kw6-vf-ZdF" firstAttribute="top" secondItem="dq2-zT-8TP" secondAttribute="top" id="NsP-vO-y3l"/>
                                     <constraint firstAttribute="trailing" secondItem="kw6-vf-ZdF" secondAttribute="trailing" id="PYe-tU-S2k"/>
-                                    <constraint firstAttribute="trailing" secondItem="0HO-Is-exM" secondAttribute="trailing" id="S5B-aw-BCu"/>
                                     <constraint firstItem="Q1j-Lh-Eyw" firstAttribute="centerX" secondItem="dq2-zT-8TP" secondAttribute="centerX" id="VOQ-jA-QTb"/>
                                     <constraint firstItem="0Cc-Ja-nJS" firstAttribute="centerX" secondItem="dq2-zT-8TP" secondAttribute="centerX" id="Vpg-AS-IqL"/>
                                     <constraint firstAttribute="trailing" secondItem="Ihf-PJ-EJ5" secondAttribute="trailing" id="Whg-rV-vLq"/>
                                     <constraint firstItem="Q1j-Lh-Eyw" firstAttribute="top" secondItem="kw6-vf-ZdF" secondAttribute="bottom" constant="-20" id="agz-56-BIf"/>
-                                    <constraint firstItem="0HO-Is-exM" firstAttribute="top" secondItem="0Cc-Ja-nJS" secondAttribute="bottom" constant="19" id="bXZ-uD-QlK"/>
-                                    <constraint firstItem="0Cc-Ja-nJS" firstAttribute="top" secondItem="Q1j-Lh-Eyw" secondAttribute="bottom" constant="15" id="df5-rQ-VdE"/>
-                                    <constraint firstItem="Ihf-PJ-EJ5" firstAttribute="top" secondItem="0HO-Is-exM" secondAttribute="bottom" constant="-3" id="eCs-PR-un6"/>
-                                    <constraint firstItem="0HO-Is-exM" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="kFt-dd-FhI"/>
+                                    <constraint firstItem="6fs-lk-ILw" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="c9R-al-8xL"/>
+                                    <constraint firstItem="0Cc-Ja-nJS" firstAttribute="top" secondItem="Q1j-Lh-Eyw" secondAttribute="bottom" constant="20.5" id="df5-rQ-VdE"/>
+                                    <constraint firstAttribute="trailing" secondItem="6fs-lk-ILw" secondAttribute="trailing" id="lTx-zL-Bbe"/>
                                     <constraint firstItem="Ihf-PJ-EJ5" firstAttribute="leading" secondItem="dq2-zT-8TP" secondAttribute="leading" id="mv6-I2-e8P"/>
                                     <constraint firstAttribute="bottom" secondItem="Ihf-PJ-EJ5" secondAttribute="bottom" constant="-4" id="qIE-mk-HMf"/>
+                                    <constraint firstItem="6fs-lk-ILw" firstAttribute="top" secondItem="0Cc-Ja-nJS" secondAttribute="bottom" constant="36" id="zXr-Do-GoH"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -457,16 +448,16 @@
                         <outlet property="changeLabel" destination="n8n-ir-AUN" id="8P4-6T-Ksh"/>
                         <outlet property="currencyIconContainer" destination="Q1j-Lh-Eyw" id="fxn-vw-xV1"/>
                         <outlet property="currencyPicker" destination="Ihf-PJ-EJ5" id="AFV-qY-ogP"/>
-                        <outlet property="dateLabel1" destination="Ai8-YJ-wQo" id="1H1-e6-CvV"/>
-                        <outlet property="dateLabel2" destination="y63-Z2-DVy" id="i4t-h4-1Pi"/>
-                        <outlet property="dateLabel3" destination="fgA-O1-vS3" id="cXJ-o4-XQy"/>
-                        <outlet property="dateLabel4" destination="cUP-kh-4dH" id="c9h-NT-ekR"/>
-                        <outlet property="dateLabel5" destination="fPi-Zg-nLY" id="Zn6-v9-usF"/>
-                        <outlet property="dateLabel6" destination="225-7D-WVm" id="r4Z-8t-RCG"/>
-                        <outlet property="dateLabel7" destination="LV3-oJ-9LU" id="hls-NT-NxS"/>
-                        <outlet property="dateStack" destination="ed6-xi-89t" id="hEA-Cb-x3B"/>
-                        <outlet property="graph" destination="aWU-Op-t33" id="4yB-LM-2de"/>
-                        <outlet property="graphContainer" destination="0HO-Is-exM" id="lwO-Iu-qdX"/>
+                        <outlet property="dateLabel1" destination="iI0-tp-BxJ" id="rwQ-56-236"/>
+                        <outlet property="dateLabel2" destination="GgG-OI-p6Z" id="QL3-uD-6lu"/>
+                        <outlet property="dateLabel3" destination="xUX-6K-MMb" id="quT-5E-X4a"/>
+                        <outlet property="dateLabel4" destination="gxe-bP-e5s" id="lTc-Zg-U4A"/>
+                        <outlet property="dateLabel5" destination="Hxr-Hj-SF9" id="6Oo-LR-wIH"/>
+                        <outlet property="dateLabel6" destination="S6a-of-hjP" id="xrk-Ng-k5D"/>
+                        <outlet property="dateLabel7" destination="S6a-of-hjP" id="N15-hJ-puh"/>
+                        <outlet property="dateStack" destination="sFV-Ld-Lyj" id="0lz-9o-b41"/>
+                        <outlet property="graph" destination="rQ5-pD-dSR" id="3yP-og-ioE"/>
+                        <outlet property="graphContainer" destination="6fs-lk-ILw" id="Wee-uV-uIx"/>
                         <outlet property="priceLabel" destination="0Cc-Ja-nJS" id="eGW-1K-AYw"/>
                         <outlet property="reloadButton" destination="cqK-cY-ega" id="ElS-Sk-E5t"/>
                     </connections>

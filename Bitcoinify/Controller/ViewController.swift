@@ -82,8 +82,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 //MARK: - @IBOutlets
     
     @IBOutlet weak var reloadButton: UIButton!
-    @IBOutlet weak var bitcoinHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var bitcoinWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var currencyPicker: UIPickerView!
     @IBOutlet weak var arrow: UILabel!
     @IBOutlet weak var BTC: UIImageView!
@@ -849,6 +847,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         graphContainer.bringSubview(toFront: dateLabel6)
         dateLabel7.layer.zPosition = 1
         graphContainer.bringSubview(toFront: dateLabel7)
+        dateStack.layer.zPosition = 1
+        graphContainer.bringSubview(toFront: dateStack)
     }
     
     // Mark: - Make Graph Functions
@@ -921,7 +921,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         graphView.rangeMax = whole // Sets the maximum value for the y-axis (essential to have, if deleted or commented out graph will most likely be incorrect)
         
         
-        graphView.bottomMargin = 1 // Space between bottom edge of graph and x-axis
+        graphView.bottomMargin = 0 // Space between bottom edge of graph and x-axis
         graphView.shouldRangeAlwaysStartAtZero = true // Y-axis start at zero? (Bool)
         graphView.dataPointSpacing = graph.frame.size.width / CGFloat(valuesArray.count - 1)
         graphView.shouldAdaptRange = false // Should abide by minimum and maximum user-set values for y-axis

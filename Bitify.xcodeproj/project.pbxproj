@@ -16,6 +16,7 @@
 		C29FB9B32036D069005AC780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29FB9B22036D069005AC780 /* Assets.xcassets */; };
 		C29FB9B62036D069005AC780 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C29FB9B42036D069005AC780 /* LaunchScreen.storyboard */; };
 		C29FB9BE2036D28C005AC780 /* Bitcoin Data Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FB9BD2036D28C005AC780 /* Bitcoin Data Model.swift */; };
+		C2C17D04203D2AF6007F708E /* Fabrica.otf in Resources */ = {isa = PBXBuildFile; fileRef = C2C17D03203D2AC4007F708E /* Fabrica.otf */; };
 		C2D4ECF02036D44E0066FF97 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4ECEF2036D44E0066FF97 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		C29FB9B52036D069005AC780 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C29FB9B72036D069005AC780 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C29FB9BD2036D28C005AC780 /* Bitcoin Data Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bitcoin Data Model.swift"; sourceTree = "<group>"; };
+		C2C17D03203D2AC4007F708E /* Fabrica.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fabrica.otf; path = ../../../../../../../../../Library/Fonts/Fabrica.otf; sourceTree = "<group>"; };
 		C2D4ECEF2036D44E0066FF97 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +70,7 @@
 		C2706E55203BCE8000D67C02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C2C17D01203D2ABC007F708E /* Fonts */,
 				C29FB9B22036D069005AC780 /* Assets.xcassets */,
 				C29FB9B72036D069005AC780 /* Info.plist */,
 			);
@@ -140,6 +143,14 @@
 			path = Bitcoinify;
 			sourceTree = "<group>";
 		};
+		C2C17D01203D2ABC007F708E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D03203D2AC4007F708E /* Fabrica.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -202,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2C17D04203D2AF6007F708E /* Fabrica.otf in Resources */,
 				C29FB9B62036D069005AC780 /* LaunchScreen.storyboard in Resources */,
 				C29FB9B32036D069005AC780 /* Assets.xcassets in Resources */,
 				C29FB9B12036D069005AC780 /* Main.storyboard in Resources */,

@@ -16,7 +16,6 @@
 		C29FB9B32036D069005AC780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C29FB9B22036D069005AC780 /* Assets.xcassets */; };
 		C29FB9B62036D069005AC780 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C29FB9B42036D069005AC780 /* LaunchScreen.storyboard */; };
 		C29FB9BE2036D28C005AC780 /* Bitcoin Data Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FB9BD2036D28C005AC780 /* Bitcoin Data Model.swift */; };
-		C2C17D04203D2AF6007F708E /* Fabrica.otf in Resources */ = {isa = PBXBuildFile; fileRef = C2C17D03203D2AC4007F708E /* Fabrica.otf */; };
 		C2D4ECF02036D44E0066FF97 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4ECEF2036D44E0066FF97 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +33,36 @@
 		C29FB9B52036D069005AC780 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C29FB9B72036D069005AC780 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C29FB9BD2036D28C005AC780 /* Bitcoin Data Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bitcoin Data Model.swift"; sourceTree = "<group>"; };
-		C2C17D03203D2AC4007F708E /* Fabrica.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fabrica.otf; path = ../../../../../../../../../Library/Fonts/Fabrica.otf; sourceTree = "<group>"; };
+		C2C17D15203D2E8A007F708E /* Raleway Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway Thin.otf"; sourceTree = "<group>"; };
+		C2C17D19203D2EAC007F708E /* Raleway Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway Thin.ttf"; sourceTree = "<group>"; };
+		C2C17D1B203D2EC9007F708E /* Quark-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quark-Bold.otf"; sourceTree = "<group>"; };
+		C2C17D1C203D2ECD007F708E /* Quark-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quark-Light.otf"; sourceTree = "<group>"; };
+		C2C17D1F203D2EEE007F708E /* Stellar-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Stellar-Bold.otf"; sourceTree = "<group>"; };
+		C2C17D20203D2F13007F708E /* Quicksand_Dash.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand_Dash.otf; sourceTree = "<group>"; };
+		C2C17D21203D2F16007F708E /* Quicksand-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Bold.otf"; sourceTree = "<group>"; };
+		C2C17D22203D2F19007F708E /* Quicksand-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-BoldItalic.otf"; sourceTree = "<group>"; };
+		C2C17D23203D2F1C007F708E /* Quicksand-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Italic.otf"; sourceTree = "<group>"; };
+		C2C17D25203D2F22007F708E /* Stellar-light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Stellar-light.otf"; sourceTree = "<group>"; };
+		C2C17D26203D2F2F007F708E /* Stellar-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Stellar-Medium.otf"; sourceTree = "<group>"; };
+		C2C17D27203D2F34007F708E /* Stellar-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Stellar-Regular.otf"; sourceTree = "<group>"; };
+		C2C17D28203D2F48007F708E /* Quicksand-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Light.otf"; sourceTree = "<group>"; };
+		C2C17D29203D2F4A007F708E /* Quicksand-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-LightItalic.otf"; sourceTree = "<group>"; };
+		C2C17D2A203D2F4D007F708E /* Quicksand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.otf"; sourceTree = "<group>"; };
+		C2C17D2C203D2F5B007F708E /* Fabrica.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fabrica.otf; sourceTree = "<group>"; };
+		C2C17D2E203D2FBC007F708E /* Tahoma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Tahoma.ttf; path = ../../../../../../../../../../../../Library/Fonts/Tahoma.ttf; sourceTree = "<group>"; };
+		C2C17D2F203D2FBC007F708E /* Tahoma Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Tahoma Bold.ttf"; path = "../../../../../../../../../../../../Library/Fonts/Tahoma Bold.ttf"; sourceTree = "<group>"; };
+		C2C17D31203D31AF007F708E /* VarelaRound-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "VarelaRound-Regular.ttf"; path = "../../../../../../../../../Library/Fonts/VarelaRound-Regular.ttf"; sourceTree = "<group>"; };
+		C2C17D33203D31E1007F708E /* Typo Grotesk Thin Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Thin Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Thin Demo.otf"; sourceTree = "<group>"; };
+		C2C17D34203D31E1007F708E /* Typo Grotesk Bold Italic Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Bold Italic Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Bold Italic Demo.otf"; sourceTree = "<group>"; };
+		C2C17D35203D31E2007F708E /* Typo Grotesk Bold Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Bold Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Bold Demo.otf"; sourceTree = "<group>"; };
+		C2C17D36203D31E2007F708E /* Typo Grotesk Black Italic Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Black Italic Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Black Italic Demo.otf"; sourceTree = "<group>"; };
+		C2C17D37203D31E3007F708E /* Typo Grotesk Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Demo.otf"; sourceTree = "<group>"; };
+		C2C17D38203D31E3007F708E /* Typo Grotesk Black Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Black Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Black Demo.otf"; sourceTree = "<group>"; };
+		C2C17D39203D31E4007F708E /* Typo Grotesk Thin Italic Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Thin Italic Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Thin Italic Demo.otf"; sourceTree = "<group>"; };
+		C2C17D3A203D31E4007F708E /* Typo Grotesk Italic Demo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Typo Grotesk Italic Demo.otf"; path = "../../../../../../../../../../Library/Fonts/Typo Grotesk Italic Demo.otf"; sourceTree = "<group>"; };
+		C2C17D3C203D3246007F708E /* Zaio.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zaio.otf; path = ../../../../../../../../../../Library/Fonts/Zaio.otf; sourceTree = "<group>"; };
+		C2C17D3F203D58FA007F708E /* Moon Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moon Light.otf"; sourceTree = "<group>"; };
+		C2C17D40203D58FD007F708E /* Moon Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moon Bold.otf"; sourceTree = "<group>"; };
 		C2D4ECEF2036D44E0066FF97 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,9 +174,118 @@
 		C2C17D01203D2ABC007F708E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				C2C17D03203D2AC4007F708E /* Fabrica.otf */,
+				C2C17D2B203D2F55007F708E /* Fabrica */,
+				C2C17D41203D590A007F708E /* Moon */,
+				C2C17D1A203D2EC0007F708E /* Quark */,
+				C2C17D1E203D2EE1007F708E /* Quicksand */,
+				C2C17D14203D2E82007F708E /* Raleway */,
+				C2C17D1D203D2ED8007F708E /* Stellar */,
+				C2C17D2D203D2F8F007F708E /* Tahoma */,
+				C2C17D32203D31C5007F708E /* Typo Grotesk */,
+				C2C17D30203D3198007F708E /* Varela */,
+				C2C17D3B203D3227007F708E /* Zaio */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		C2C17D14203D2E82007F708E /* Raleway */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D19203D2EAC007F708E /* Raleway Thin.ttf */,
+				C2C17D15203D2E8A007F708E /* Raleway Thin.otf */,
+			);
+			path = Raleway;
+			sourceTree = "<group>";
+		};
+		C2C17D1A203D2EC0007F708E /* Quark */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D1B203D2EC9007F708E /* Quark-Bold.otf */,
+				C2C17D1C203D2ECD007F708E /* Quark-Light.otf */,
+			);
+			path = Quark;
+			sourceTree = "<group>";
+		};
+		C2C17D1D203D2ED8007F708E /* Stellar */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D25203D2F22007F708E /* Stellar-light.otf */,
+				C2C17D1F203D2EEE007F708E /* Stellar-Bold.otf */,
+				C2C17D26203D2F2F007F708E /* Stellar-Medium.otf */,
+				C2C17D27203D2F34007F708E /* Stellar-Regular.otf */,
+			);
+			path = Stellar;
+			sourceTree = "<group>";
+		};
+		C2C17D1E203D2EE1007F708E /* Quicksand */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D20203D2F13007F708E /* Quicksand_Dash.otf */,
+				C2C17D21203D2F16007F708E /* Quicksand-Bold.otf */,
+				C2C17D22203D2F19007F708E /* Quicksand-BoldItalic.otf */,
+				C2C17D23203D2F1C007F708E /* Quicksand-Italic.otf */,
+				C2C17D28203D2F48007F708E /* Quicksand-Light.otf */,
+				C2C17D29203D2F4A007F708E /* Quicksand-LightItalic.otf */,
+				C2C17D2A203D2F4D007F708E /* Quicksand-Regular.otf */,
+			);
+			path = Quicksand;
+			sourceTree = "<group>";
+		};
+		C2C17D2B203D2F55007F708E /* Fabrica */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D2C203D2F5B007F708E /* Fabrica.otf */,
+			);
+			path = Fabrica;
+			sourceTree = "<group>";
+		};
+		C2C17D2D203D2F8F007F708E /* Tahoma */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D2F203D2FBC007F708E /* Tahoma Bold.ttf */,
+				C2C17D2E203D2FBC007F708E /* Tahoma.ttf */,
+			);
+			path = Tahoma;
+			sourceTree = "<group>";
+		};
+		C2C17D30203D3198007F708E /* Varela */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D31203D31AF007F708E /* VarelaRound-Regular.ttf */,
+			);
+			path = Varela;
+			sourceTree = "<group>";
+		};
+		C2C17D32203D31C5007F708E /* Typo Grotesk */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D38203D31E3007F708E /* Typo Grotesk Black Demo.otf */,
+				C2C17D36203D31E2007F708E /* Typo Grotesk Black Italic Demo.otf */,
+				C2C17D35203D31E2007F708E /* Typo Grotesk Bold Demo.otf */,
+				C2C17D34203D31E1007F708E /* Typo Grotesk Bold Italic Demo.otf */,
+				C2C17D37203D31E3007F708E /* Typo Grotesk Demo.otf */,
+				C2C17D3A203D31E4007F708E /* Typo Grotesk Italic Demo.otf */,
+				C2C17D33203D31E1007F708E /* Typo Grotesk Thin Demo.otf */,
+				C2C17D39203D31E4007F708E /* Typo Grotesk Thin Italic Demo.otf */,
+			);
+			path = "Typo Grotesk";
+			sourceTree = "<group>";
+		};
+		C2C17D3B203D3227007F708E /* Zaio */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D3C203D3246007F708E /* Zaio.otf */,
+			);
+			path = Zaio;
+			sourceTree = "<group>";
+		};
+		C2C17D41203D590A007F708E /* Moon */ = {
+			isa = PBXGroup;
+			children = (
+				C2C17D40203D58FD007F708E /* Moon Bold.otf */,
+				C2C17D3F203D58FA007F708E /* Moon Light.otf */,
+			);
+			path = Moon;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,7 +350,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2C17D04203D2AF6007F708E /* Fabrica.otf in Resources */,
 				C29FB9B62036D069005AC780 /* LaunchScreen.storyboard in Resources */,
 				C29FB9B32036D069005AC780 /* Assets.xcassets in Resources */,
 				C29FB9B12036D069005AC780 /* Main.storyboard in Resources */,

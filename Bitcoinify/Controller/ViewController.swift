@@ -148,6 +148,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      //  priceLabel.font = UIFont(name: "Fabrica", size: 35)
         bitcoin.center = bitcoinLogoContainer.center
         dateLabel1.alpha = 0
         dateLabel2.alpha = 0
@@ -321,7 +322,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return currencyArray[row]
     }
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let attributedString = NSAttributedString(string: currencyArray[row], attributes: [NSAttributedStringKey.foregroundColor: UIColor.mint])
+        let attributedString = NSAttributedString(string: currencyArray[row], attributes: [NSAttributedStringKey.foregroundColor: UIColor.mint]) //NSAttributedStringKey.font: "Moon-Light"
         return attributedString
     }
     

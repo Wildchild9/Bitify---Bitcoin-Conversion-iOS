@@ -25,10 +25,7 @@ class CurrentRow {
     var number : Int = 0
     static let row = CurrentRow() // This is a singleton
 }
-class IconAnimation {
-    var completed : Bool = true
-    static let status = IconAnimation() // This is a singleton
-}
+
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, ScrollableGraphViewDataSource {
     
@@ -262,6 +259,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         priceLabel.sizeToFit()
         priceLabel.isHidden = true
         
+        bitcoin.frame.size = CGSize(width: 175, height: 175)
+        bitcoin.center = view.center
     }
     
     
@@ -335,35 +334,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         currentRow = row
         CurrentRow.row.number = row
         finalURL = baseURL + currencyArray[row]
- 
+         
         if row > 0 {
             currentDisplayRow = row
             currencySelected = currencySymbolsArray[row - 1]
             
-            totalCurrencyAnimation(currentRow: row)
-//            if IconAnimation.status.completed == true {
-//                currencyIconFadeScaleAnimation(currentRow: row) { isFinished in
-//                    if isFinished {
-//                        IconAnimation.status.completed = true
-//                    }
-//                }
-//            }
+            currencyIconFadeScaleAnimation(currentRow: row)
+
             updateInterfaceForPickerview(finalURL: finalURL, currencySelected: currencySelected)
         }
     }
     
     
-    func totalCurrencyAnimation(currentRow row: Int, completion: ((Bool) -> Void)? = nil) {
-        if IconAnimation.status.completed == true {
-            currencyIconFadeScaleAnimation(currentRow: row) { isFinished in
-                if isFinished {
-                    IconAnimation.status.completed = true
-                }
-            }
-        }
-        let completed = true
-        completion?(completed)
-    }
+    
+    
+    
+    
+    
+    
     
     
     
@@ -664,7 +652,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 
     func currencyIconFadeScaleAnimation(currentRow: Int, completion: ((Bool) -> Void)? = nil) {
         let icons = [AUD, BRL, CAD, CNY, EUR, GBP, HKD, IDR, ILS, INR, JPY, MXN, NOK, NZD, PLN, RON, RUB, SEK, SGD, USD, ZAR]
-        IconAnimation.status.completed = false
+        
         let currentIcon = icons[currentRow - 1]!
         
         if BTC.frame.origin.x == centerLocation {
@@ -731,13 +719,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 currentIcon.frame.origin.y += 22.5
                 currentIcon.frame.origin.x -= 25
                 currentIcon.alpha = 1.0
-            }) { finished in
-                if finished {
-                    previousIcon.frame.origin.x = self.smallX
-                    previousIcon.frame.origin.y = self.smallY
-
-                }
-            }
+            }, completion: nil)
         } else {
             reloadData(row: row, completion: nil)
         }
@@ -808,7 +790,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                                 self.dateLabel6.text = self.arrayOfDates[5].monthDay()
                                 self.dateLabel7.text = self.arrayOfDates[6].monthDay()
                                 
-                                self.datesBuildAnimationWithDelay(delay: 0.2, animationOption: .curveEaseInOut, singleAnimationDuration: 1.0)
+                                self.datesBuildAnimationWithDelay(delay: 0.15, animationOption: .curveEaseInOut, singleAnimationDuration: 0.75)
                                 
                             } else {
                                 print("Graph failed to load data")

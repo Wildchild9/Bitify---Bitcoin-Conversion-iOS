@@ -25,7 +25,7 @@
 		AD078B7DA934820AFBA7CA01 /* Pods-Bitify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bitify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bitify/Pods-Bitify.release.xcconfig"; sourceTree = "<group>"; };
 		C251C6AE203CDE30003465C7 /* BitcoinDateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinDateData.swift; sourceTree = "<group>"; };
 		C251C6B0203CDE52003465C7 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
-		C29FB9A82036D069005AC780 /* Bitify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bitify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C29FB9A82036D069005AC780 /* Cryptify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cryptify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29FB9AB2036D069005AC780 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C29FB9AD2036D069005AC780 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C29FB9B02036D069005AC780 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 		C29FB9A92036D069005AC780 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C29FB9A82036D069005AC780 /* Bitify.app */,
+				C29FB9A82036D069005AC780 /* Cryptify.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -291,9 +291,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C29FB9A72036D069005AC780 /* Bitify */ = {
+		C29FB9A72036D069005AC780 /* Cryptify */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Bitify" */;
+			buildConfigurationList = C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Cryptify" */;
 			buildPhases = (
 				C2FE1A22B299532DE7518526 /* [CP] Check Pods Manifest.lock */,
 				C29FB9A42036D069005AC780 /* Sources */,
@@ -306,9 +306,9 @@
 			);
 			dependencies = (
 			);
-			name = Bitify;
+			name = Cryptify;
 			productName = Bitcoinify;
-			productReference = C29FB9A82036D069005AC780 /* Bitify.app */;
+			productReference = C29FB9A82036D069005AC780 /* Cryptify.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -340,7 +340,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C29FB9A72036D069005AC780 /* Bitify */,
+				C29FB9A72036D069005AC780 /* Cryptify */,
 			);
 		};
 /* End PBXProject section */
@@ -610,7 +610,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Bitify" */ = {
+		C29FB9BA2036D069005AC780 /* Build configuration list for PBXNativeTarget "Cryptify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C29FB9BB2036D069005AC780 /* Debug */,

@@ -275,6 +275,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         bitcoin.frame.size = CGSize(width: 175, height: 175)
         bitcoin.center = view.center
         animateBitcoin()
+        
         priceLabel.text = ""
         
         AUD.alpha = 0.0

@@ -327,7 +327,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Bitify" */;
+			buildConfigurationList = C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Cryptify" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -572,9 +572,9 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JPFSXG2FT6;
-				INFOPLIST_FILE = "Bitcoinify/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Cryptify/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Bitify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Cryptify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -589,9 +589,9 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JPFSXG2FT6;
-				INFOPLIST_FILE = "Bitcoinify/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Cryptify/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Bitify;
+				PRODUCT_BUNDLE_IDENTIFIER = com.noahwilder.Cryptify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -601,7 +601,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Bitify" */ = {
+		C29FB9A32036D069005AC780 /* Build configuration list for PBXProject "Cryptify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C29FB9B82036D069005AC780 /* Debug */,

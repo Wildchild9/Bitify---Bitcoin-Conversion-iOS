@@ -144,7 +144,7 @@
 		C29FB99F2036D069005AC780 = {
 			isa = PBXGroup;
 			children = (
-				C29FB9AA2036D069005AC780 /* Bitcoinify */,
+				C29FB9AA2036D069005AC780 /* Cryptify */,
 				C29FB9A92036D069005AC780 /* Products */,
 				5D869D345D6E1210E0EF9D39 /* Pods */,
 				0CDB7D426CF6D1E0AE717D15 /* Frameworks */,
@@ -159,7 +159,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C29FB9AA2036D069005AC780 /* Bitcoinify */ = {
+		C29FB9AA2036D069005AC780 /* Cryptify */ = {
 			isa = PBXGroup;
 			children = (
 				C29FB9AB2036D069005AC780 /* AppDelegate.swift */,
@@ -168,7 +168,7 @@
 				C2706E57203BCE8E00D67C02 /* View */,
 				C2706E55203BCE8000D67C02 /* Supporting Files */,
 			);
-			path = Bitcoinify;
+			path = Cryptify;
 			sourceTree = "<group>";
 		};
 		C2C17D01203D2ABC007F708E /* Fonts */ = {
